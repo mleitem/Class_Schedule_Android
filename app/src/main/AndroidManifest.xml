@@ -14,8 +14,21 @@
         android:theme="@style/Theme.MeganLeitemC196PA"
         tools:targetApi="31">
         <activity
+            android:name=".UI.NewTerm"
+            android:exported="false"
+            android:label="New Term"/>
+        <activity
+            android:name=".UI.CourseList"
+            android:exported="false"
+            android:label="My Courses" />
+        <activity
+            android:name=".UI.TermList"
+            android:exported="false"
+            android:label="My Terms" />
+        <activity
             android:name=".UI.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
