@@ -11,8 +11,8 @@ public class Course {
     private int courseId;
 
     private String courseTitle;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String status;
     private String instructorName;
     private String instructorEmail;
@@ -22,7 +22,7 @@ public class Course {
 
     private int termId;
 
-    public Course(int courseId, String courseTitle, Date startDate, Date endDate, String status, String instructorName, String instructorEmail, String instructorPhone, int termId) {
+    public Course(int courseId, String courseTitle, String startDate, String endDate, String status, String instructorName, String instructorEmail, String instructorPhone, int termId) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.startDate = startDate;
@@ -42,27 +42,27 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public String getCourseName() {
+    public String getCourseTitle() {
         return courseTitle;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseTitle = courseName;
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.meganleitem_c196pa.R;
+import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,5 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, TermList.class);
         startActivity(intent);
+        Repository repo = new Repository(getApplication());
+        Term term = new Term(1, "Summer 2022", "6/1/2022", "9/1/2022");
+        repo.insert(term);
     }
 }
