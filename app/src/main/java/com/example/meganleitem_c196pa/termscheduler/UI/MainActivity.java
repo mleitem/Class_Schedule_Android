@@ -1,4 +1,4 @@
-package com.example.meganleitem_c196pa.UI;
+package com.example.meganleitem_c196pa.termscheduler.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
