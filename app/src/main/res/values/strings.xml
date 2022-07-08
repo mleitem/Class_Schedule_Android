@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Megan Leitem - C196 PA</string>
+    <string name="term_list">Term List</string>
+    <string name="course_list">Course List</string>
+    <string name="add_button">Add Button</string>
+    <string name="course_list1">Course List</string>
+    <string name="course_name">Course Name</string>
+    <string name="course_status">Course Status</string>
+    <string name="save">Save</string>
+    <string name="calculus">Calculus</string>
+    <string name="active">Active</string>
+    <string name="final_assessment">Final Assessment</string>
+    <string name="assessment_title">Assessment Title</string>
 </resources>

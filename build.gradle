@@ -14,10 +14,7 @@ plugins {
 }
 
 allprojects {
-    /*repositories {
-        google()
-        mavenCentral()
-    }*/
+
     ext {
         materialVersion = '1.2.1'
         roomVersion = '2.2.5'

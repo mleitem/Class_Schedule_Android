@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.meganleitem_c196pa.R;
 
@@ -27,6 +28,11 @@ public class CourseList extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveTerm(View view) {
+
+
     }
 }
 
