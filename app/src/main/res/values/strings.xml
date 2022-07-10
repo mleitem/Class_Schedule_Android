@@ -4,11 +4,22 @@
     <string name="course_list">Course List</string>
     <string name="add_button">Add Button</string>
     <string name="course_list1">Course List</string>
-    <string name="course_name">Course Name</string>
-    <string name="course_status">Course Status</string>
+    <string name="course_title">Course Title:</string>
+    <string name="course_status">Course Status:</string>
     <string name="save">Save</string>
     <string name="calculus">Calculus</string>
     <string name="active">Active</string>
     <string name="final_assessment">Final Assessment</string>
     <string name="assessment_title">Assessment Title</string>
+    <string name="start_date">Start Date:</string>
+    <string name="end_date">End Date:</string>
+    <string name="_07_01_2022">07/01/2022</string>
+    <string name="_06_01_2022">06/01/2022</string>
+    <string name="instructor_name">Instructor Name:</string>
+    <string name="dr_jane_smith">Dr. Jane Smith</string>
+    <string name="drsmith_gmail_com">drsmith@gmail.com</string>
+    <string name="instructor_email">Instructor Email:</string>
+    <string name="_555_555_5555">555-555-5555</string>
+    <string name="instructor_phone">Instructor Phone:</string>
+    <string name="term_title">Term Title:</string>
 </resources>

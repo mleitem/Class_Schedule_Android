@@ -21,7 +21,7 @@
             android:exported="false"
             android:label="New Term" />
         <activity
-            android:name=".termscheduler.UI.CourseList"
+            android:name=".termscheduler.UI.ViewTerm"
             android:exported="false"
             android:label="My Courses" />
         <activity
