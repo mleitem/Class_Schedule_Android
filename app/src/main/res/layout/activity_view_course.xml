@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".termscheduler.UI.ViewTerm">
+
+    <ScrollView
+        android:layout_width="387dp"
+        android:layout_height="695dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        //Course Title
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/course_title" />
+
+                <EditText
+                    android:id="@+id/editcoursetitle"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/calculus" />
+            </LinearLayout>
+
+            //Course Start
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_date" />
+
+                <EditText
+                    android:id="@+id/editcoursestart"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/_06_01_2022" />
+            </LinearLayout>
+
+            //Course End
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_date" />
+
+                <EditText
+                    android:id="@+id/editcourseend"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/_07_01_2022" />
+            </LinearLayout>
+
+            //Course Status
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/course_status" />
+
+                <EditText
+                    android:id="@+id/editcoursestatus"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/active" />
+            </LinearLayout>
+
+            //Instructor Name
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/instructor_name" />
+
+                <EditText
+                    android:id="@+id/editinstructorname"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dr_jane_smith" />
+            </LinearLayout>
+
+            //Instructor Email
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/instructor_email" />
+
+                <EditText
+                    android:id="@+id/editinstructoremail"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/drsmith_gmail_com" />
+            </LinearLayout>
+
+            //Instructor Phone
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/instructor_phone" />
+
+                <EditText
+                    android:id="@+id/editinstructorphone"
+                    android:layout_width="177dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/_555_555_5555" />
+            </LinearLayout><![CDATA[-->]]>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
