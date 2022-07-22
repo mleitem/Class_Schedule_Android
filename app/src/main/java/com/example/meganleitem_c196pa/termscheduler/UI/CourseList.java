@@ -46,7 +46,7 @@ public class CourseList extends AppCompatActivity {
     }
 
     public void enterAssessmentList(View view) {
-        Intent intent = new Intent(CourseList.this, ViewCourse.class);
+        Intent intent = new Intent(CourseList.this, AssessmentList.class);
         startActivity(intent);
     }
 
