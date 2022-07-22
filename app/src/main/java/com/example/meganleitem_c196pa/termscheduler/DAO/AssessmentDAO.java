@@ -1,5 +1,6 @@
 package com.example.meganleitem_c196pa.termscheduler.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -26,5 +27,6 @@ public interface AssessmentDAO {
 
     @Query("SELECT * FROM assessments ORDER BY assessmentId ASC")
     List<Assessment> getAllAssessments();
+
 
 }

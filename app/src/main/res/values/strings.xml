@@ -22,4 +22,10 @@
     <string name="_555_555_5555">555-555-5555</string>
     <string name="instructor_phone">Instructor Phone:</string>
     <string name="term_title">Term Title:</string>
+    <string name="assessment_type">Assessment Type:</string>
+    <string name="midterm">Midterm</string>
+    <string name="semester_midterm">Semester Midterm</string>
+    <string name="_06_08_2022">06/08/2022</string>
+    <string name="assessment_id">Assessment ID:</string>
+    <string name="term_id">Term ID</string>
 </resources>

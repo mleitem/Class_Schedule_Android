@@ -1,13 +1,18 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meganleitem_c196pa.R;
+import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 
 import java.util.Objects;
 
@@ -19,6 +24,7 @@ public class ViewCourse extends AppCompatActivity {
     EditText editInstructorName;
     EditText editInstructorEmail;
     EditText editInstructorPhone;
+    TextView viewId;
 
     String title;
     String start;
@@ -27,7 +33,9 @@ public class ViewCourse extends AppCompatActivity {
     String instructorName;
     String instructorEmail;
     String instructorPhone;
+    int id;
 
+    Repository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,7 @@ public class ViewCourse extends AppCompatActivity {
         setContentView(R.layout.activity_view_course);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        repo = new Repository(getApplication());
 
         editTitle = findViewById(R.id.editcoursetitle);
         editStart = findViewById(R.id.editcoursestart);
@@ -43,6 +52,7 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorName = findViewById(R.id.editinstructorname);
         editInstructorEmail = findViewById(R.id.editinstructoremail);
         editInstructorPhone = findViewById(R.id.editinstructorphone);
+        viewId = findViewById(R.id.viewcourseid);
 
         title = getIntent().getStringExtra("title");
         start = getIntent().getStringExtra("start");
@@ -50,7 +60,8 @@ public class ViewCourse extends AppCompatActivity {
         status = getIntent().getStringExtra("status");
         instructorName = getIntent().getStringExtra("instructor name");
         instructorEmail = getIntent().getStringExtra("instructor email");
-        instructorPhone = getIntent().getStringExtra("instructor phone");
+        instructorPhone = getIntent().getStringExtra("instructorphone");
+        id = getIntent().getIntExtra("id", -1);
 
 
         editTitle.setText(title);
@@ -60,6 +71,7 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorName.setText(instructorName);
         editInstructorEmail.setText(instructorEmail);
         editInstructorPhone.setText(instructorPhone);
+        viewId.setText(Integer.toString(id));
     }
 
     @Override
@@ -72,8 +84,35 @@ public class ViewCourse extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void saveTerm(View view) {
+    public int findTermId(int courseId) {
+        int termId = 0;
+        for(Course c: repo.getAllCourses()){
+            if(courseId == c.getCourseId()){
+                termId = c.getTermId();
+            }
+        }
+        return termId;
+    }
 
+    public void saveCourse(View view) {
+        Course course;
+        int termId = findTermId(id);
+        if(id == -1) {
+            int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
+
+
+            course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+            repo.insert(course);
+        }
+        else {
+            course = new Course(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+            repo.update(course);
+        }
+
+        Intent intent = new Intent(ViewCourse.this, CourseList.class);
+        startActivity(intent);
 
     }
 }

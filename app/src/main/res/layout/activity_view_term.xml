@@ -37,7 +37,7 @@
                 <EditText
                     android:id="@+id/edittermtitle"
                     android:layout_width="177dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:hint="@string/calculus" />
             </LinearLayout>
 
@@ -55,7 +55,7 @@
                 <EditText
                     android:id="@+id/edittermstart"
                     android:layout_width="177dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:hint="@string/_06_01_2022" />
             </LinearLayout>
 
@@ -73,87 +73,30 @@
                 <EditText
                     android:id="@+id/edittermend"
                     android:layout_width="177dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:hint="@string/_07_01_2022" />
             </LinearLayout>
 
-            ---------SAVING FOR VIEW COURSE-------------
-
-
-<!--            //Course Status
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="41dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/course_status" />
+                    android:layout_width="192dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Term ID:" />
 
-                <EditText
-                    android:id="@+id/editcoursestatus"
+                <TextView
+                    android:id="@+id/viewtermid"
                     android:layout_width="177dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/active" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/term_id"
+                    android:gravity="center_vertical" />
             </LinearLayout>
-
-            //Instructor Name
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/instructor_name" />
-
-                <EditText
-                    android:id="@+id/editinstructorname"
-                    android:layout_width="177dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/dr_jane_smith" />
-            </LinearLayout>
-
-            //Instructor Email
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/instructor_email" />
-
-                <EditText
-                    android:id="@+id/editinstructoremail"
-                    android:layout_width="177dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/drsmith_gmail_com" />
-            </LinearLayout>
-
-            //Instructor Phone
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/instructor_phone" />
-
-                <EditText
-                    android:id="@+id/editinstructorphone"
-                    android:layout_width="177dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/_555_555_5555" />
-            </LinearLayout>-->
-
-
-            -----------END SAVING FOR VIEW COURSE-----------
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -51,7 +51,7 @@ public class TermList extends AppCompatActivity {
     }
 
     public void enterNewTerm(View view) {
-        Intent intent = new Intent(TermList.this, NewTerm.class);
+        Intent intent = new Intent(TermList.this, ViewTerm.class);
         startActivity(intent);
     }
 }

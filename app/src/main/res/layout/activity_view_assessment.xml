@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="saveAssessment"
     tools:context=".termscheduler.UI.ViewAssessment">
 
     <ScrollView
@@ -25,6 +26,7 @@
             android:orientation="vertical">
 
             //Assessment Type
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -33,16 +35,17 @@
                 <TextView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="Assessment Type:" />
+                    android:text="@string/assessment_type" />
 
                 <EditText
                     android:id="@+id/editassessmenttype"
                     android:layout_width="177dp"
                     android:layout_height="wrap_content"
-                    android:hint="Midterm" />
+                    android:hint="@string/midterm" />
             </LinearLayout>
 
             //Assessment Title
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -51,16 +54,17 @@
                 <TextView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="Assessment Title:" />
+                    android:text="@string/assessment_title" />
 
                 <EditText
                     android:id="@+id/editassessmenttitle"
                     android:layout_width="177dp"
                     android:layout_height="wrap_content"
-                    android:hint="Semester Midterm" />
+                    android:hint="@string/semester_midterm" />
             </LinearLayout>
 
             //Assessment Start
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -79,6 +83,7 @@
             </LinearLayout>
 
             //Assessment End
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -93,12 +98,33 @@
                     android:id="@+id/editassessmentend"
                     android:layout_width="177dp"
                     android:layout_height="wrap_content"
-                    android:hint="06/08/2022" />
-            </LinearLayout><![CDATA[
+                    android:hint="@string/_06_08_2022" />
+            </LinearLayout>
+            <![CDATA[
 
             -->
 
             ]]>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/assessment_id" />
+
+                <TextView
+                    android:id="@+id/viewassessmentid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,6 +134,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="saveAssessment"
                     android:text="@string/save" />
             </LinearLayout>
         </LinearLayout>

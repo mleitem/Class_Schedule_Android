@@ -3,6 +3,8 @@ package com.example.meganleitem_c196pa.termscheduler.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+
 import java.util.Date;
 
 @Entity(tableName = "assessments")
@@ -73,4 +75,5 @@ public class Assessment {
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
+
 }

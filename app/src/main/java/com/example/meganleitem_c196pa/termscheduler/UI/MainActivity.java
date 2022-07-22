@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         Repository repo = new Repository(getApplication());
         Term term = new Term(2, "Fall 2022", "10/1/2022", "12/1/2022");
-        Course course = new Course(1, "Anatomy", "6/1/2022", "9/1/2022", "In Progress", "Name", "Email", "Phone", 1);
+        Course course = new Course(1, "Anatomy", "6/1/2022", "9/1/2022", "In Progress", "Name", "Email", "800-400-3000", 1);
         Assessment assessment = new Assessment(1, "Midterm", "Title", "07/01/2022", "07/08/2022", 1);
         repo.insert(term);
         repo.insert(course);
