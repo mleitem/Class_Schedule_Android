@@ -100,18 +100,20 @@ public class ViewCourse extends AppCompatActivity {
         viewCourseId.setText(Integer.toString(id));
         editNote.setText(note);
 
-        for(int i = 0; i < termList.size(); ++i){
-            if(termId == termList.get(i).getTermId()){
-                int position = termAdapter.getPosition(termList.get(i));
-                associatedTerm.setSelection(position);
+        if(id != -1) {
+            for (int i = 0; i < termList.size(); ++i) {
+                if (termId == termList.get(i).getTermId()) {
+                    int position = termAdapter.getPosition(termList.get(i));
+                    associatedTerm.setSelection(position);
+                }
             }
-        }
 
-        for(int i = 0; i < courseAdapter.getCount(); ++i) {
-            String mStatus = courseAdapter.getItem(i).toString();
-            if(mStatus.matches(status)){
-                int position = courseAdapter.getPosition(courseAdapter.getItem(i));
-                courseStatus.setSelection(position);
+            for (int i = 0; i < courseAdapter.getCount(); ++i) {
+                String mStatus = courseAdapter.getItem(i).toString();
+                if (mStatus.matches(status)) {
+                    int position = courseAdapter.getPosition(courseAdapter.getItem(i));
+                    courseStatus.setSelection(position);
+                }
             }
         }
 

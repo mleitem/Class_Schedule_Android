@@ -76,18 +76,19 @@ public class ViewAssessment extends AppCompatActivity {
         editEnd.setText(end);
         viewId.setText(Integer.toString(id));
 
-        for(int i = 0; i < courseList.size(); ++i){
-            if(course == courseList.get(i).getCourseId()){
-                int position = courseAdapter.getPosition(courseList.get(i));
-                associatedCourse.setSelection(position);
+        if(id != -1) {
+            for (int i = 0; i < courseList.size(); ++i) {
+                if (course == courseList.get(i).getCourseId()) {
+                    int position = courseAdapter.getPosition(courseList.get(i));
+                    associatedCourse.setSelection(position);
+                }
             }
-        }
-
-        for(int i = 0; i < assessmentAdapter.getCount(); ++i) {
-            String mType = assessmentAdapter.getItem(i).toString();
-            if(mType.matches(type)){
-                int position = assessmentAdapter.getPosition(assessmentAdapter.getItem(i));
-                assessmentType.setSelection(position);
+            for (int i = 0; i < assessmentAdapter.getCount(); ++i) {
+                String mType = assessmentAdapter.getItem(i).toString();
+                if (mType.matches(type)) {
+                    int position = assessmentAdapter.getPosition(assessmentAdapter.getItem(i));
+                    assessmentType.setSelection(position);
+                }
             }
         }
 
