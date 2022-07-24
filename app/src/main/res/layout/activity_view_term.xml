@@ -109,6 +109,16 @@
                     android:onClick="saveTerm"
                     android:text="@string/save" />
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="58dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/associatedCoursesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#C1888E93" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

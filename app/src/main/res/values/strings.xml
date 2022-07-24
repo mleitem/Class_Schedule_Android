@@ -28,4 +28,8 @@
     <string name="_06_08_2022">06/08/2022</string>
     <string name="assessment_id">Assessment ID:</string>
     <string name="term_id">Term ID</string>
+    <string name="term">Term:</string>
+    <string name="_0">0</string>
+    <string name="id">ID</string>
+    <string name="course_id">Course ID:</string>
 </resources>

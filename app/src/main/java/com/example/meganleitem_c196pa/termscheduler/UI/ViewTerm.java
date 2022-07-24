@@ -1,6 +1,8 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +13,11 @@ import android.widget.TextView;
 
 import com.example.meganleitem_c196pa.R;
 import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ViewTerm extends AppCompatActivity {
@@ -46,11 +51,22 @@ public class ViewTerm extends AppCompatActivity {
         end = getIntent().getStringExtra("end");
         id = getIntent().getIntExtra("id",-1);
 
-
         editTitle.setText(title);
         editStart.setText(start);
         editEnd.setText(end);
         viewId.setText(Integer.toString(id));
+
+        RecyclerView recyclerView = findViewById(R.id.associatedCoursesRecyclerView);
+        List<Course> associatedCourses = new ArrayList<>();
+        for(Course c: repo.getAllCourses()){
+            if(c.getTermId() == id) {
+                associatedCourses.add(c);
+            }
+        }
+        final CourseAdapter adapter = new CourseAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setCourses(associatedCourses);
     }
 
     @Override

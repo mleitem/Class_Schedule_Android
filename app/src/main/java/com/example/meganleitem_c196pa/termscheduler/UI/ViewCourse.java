@@ -24,7 +24,9 @@ public class ViewCourse extends AppCompatActivity {
     EditText editInstructorName;
     EditText editInstructorEmail;
     EditText editInstructorPhone;
-    TextView viewId;
+    TextView viewCourseId;
+    EditText editTermId;
+
 
     String title;
     String start;
@@ -34,6 +36,7 @@ public class ViewCourse extends AppCompatActivity {
     String instructorEmail;
     String instructorPhone;
     int id;
+    int termId;
 
     Repository repo;
 
@@ -52,7 +55,8 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorName = findViewById(R.id.editinstructorname);
         editInstructorEmail = findViewById(R.id.editinstructoremail);
         editInstructorPhone = findViewById(R.id.editinstructorphone);
-        viewId = findViewById(R.id.viewcourseid);
+        viewCourseId = findViewById(R.id.viewcourseid);
+        editTermId = findViewById(R.id.edittermid);
 
         title = getIntent().getStringExtra("title");
         start = getIntent().getStringExtra("start");
@@ -60,9 +64,9 @@ public class ViewCourse extends AppCompatActivity {
         status = getIntent().getStringExtra("status");
         instructorName = getIntent().getStringExtra("instructor name");
         instructorEmail = getIntent().getStringExtra("instructor email");
-        instructorPhone = getIntent().getStringExtra("instructorphone");
+        instructorPhone = getIntent().getStringExtra("instructor phone");
         id = getIntent().getIntExtra("id", -1);
-
+        termId = getIntent().getIntExtra("termid", -1);
 
         editTitle.setText(title);
         editStart.setText(start);
@@ -71,7 +75,8 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorName.setText(instructorName);
         editInstructorEmail.setText(instructorEmail);
         editInstructorPhone.setText(instructorPhone);
-        viewId.setText(Integer.toString(id));
+        viewCourseId.setText(Integer.toString(id));
+        editTermId.setText(Integer.toString(termId));
     }
 
     @Override
@@ -97,17 +102,18 @@ public class ViewCourse extends AppCompatActivity {
     public void saveCourse(View view) {
         Course course;
         int termId = findTermId(id);
+        int newTermId = Integer.parseInt((editTermId.getText().toString()));
         if(id == -1) {
             int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
 
 
             course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), newTermId);
             repo.insert(course);
         }
         else {
             course = new Course(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), newTermId);
             repo.update(course);
         }
 
