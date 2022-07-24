@@ -64,9 +64,9 @@ public class ViewCourse extends AppCompatActivity {
         status = getIntent().getStringExtra("status");
         instructorName = getIntent().getStringExtra("instructor name");
         instructorEmail = getIntent().getStringExtra("instructor email");
-        instructorPhone = getIntent().getStringExtra("instructor phone");
+        instructorPhone = getIntent().getStringExtra("instructor phone number");
         id = getIntent().getIntExtra("id", -1);
-        termId = getIntent().getIntExtra("termid", -1);
+        termId = getIntent().getIntExtra("term id", -1);
 
         editTitle.setText(title);
         editStart.setText(start);
@@ -89,31 +89,20 @@ public class ViewCourse extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public int findTermId(int courseId) {
-        int termId = 0;
-        for(Course c: repo.getAllCourses()){
-            if(courseId == c.getCourseId()){
-                termId = c.getTermId();
-            }
-        }
-        return termId;
-    }
-
     public void saveCourse(View view) {
         Course course;
-        int termId = findTermId(id);
-        int newTermId = Integer.parseInt((editTermId.getText().toString()));
+        int termId = Integer.parseInt((editTermId.getText().toString()));
         if(id == -1) {
             int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
 
 
             course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), newTermId);
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
             repo.insert(course);
         }
         else {
             course = new Course(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), editStatus.getText().toString(), editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), newTermId);
+                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
             repo.update(course);
         }
 
