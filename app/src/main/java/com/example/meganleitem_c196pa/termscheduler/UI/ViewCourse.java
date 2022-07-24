@@ -69,7 +69,6 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorEmail = findViewById(R.id.editinstructoremail);
         editInstructorPhone = findViewById(R.id.editinstructorphone);
         viewCourseId = findViewById(R.id.viewcourseid);
-        editTermId = findViewById(R.id.edittermid);
         associatedTerm = (Spinner) findViewById(R.id.associatedTermSpinner);
         ArrayList<Term> termList = new ArrayList<>();
         for(Term t: repo.getAllTerms()) {
