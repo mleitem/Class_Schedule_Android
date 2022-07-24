@@ -17,7 +17,6 @@ public class Course {
     private String instructorName;
     private String instructorEmail;
     private String instructorPhone;
-    //Does this need to be some sort of long text data type??
     private String note;
 
     private int termId;
@@ -112,5 +111,9 @@ public class Course {
 
     public void setTermId(int termId) {
         this.termId = termId;
+    }
+
+    public String toString() {
+        return this.courseTitle;
     }
 }

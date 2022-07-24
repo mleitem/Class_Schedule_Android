@@ -38,6 +38,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                     intent.putExtra("instructor email", current.getInstructorEmail());
                     intent.putExtra("instructor phone number", current.getInstructorPhone());
                     intent.putExtra("term id", current.getTermId());
+                    intent.putExtra("note", current.getNote());
                     context.startActivity(intent);
                 }
             });
