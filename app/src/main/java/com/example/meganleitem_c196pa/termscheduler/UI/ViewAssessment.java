@@ -1,10 +1,12 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,18 +19,25 @@ import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ViewAssessment extends AppCompatActivity {
     Spinner assessmentType;
     EditText editTitle;
     EditText editStart;
+    DatePickerDialog.OnDateSetListener startDate;
+    final Calendar myCalendarStart = Calendar.getInstance();
     EditText editEnd;
+    DatePickerDialog.OnDateSetListener endDate;
+    final Calendar myCalendarEnd = Calendar.getInstance();
     TextView viewId;
     Spinner associatedCourse;
-
-
 
     String type;
     String title;
@@ -53,7 +62,76 @@ public class ViewAssessment extends AppCompatActivity {
         assessmentType.setAdapter(assessmentAdapter);
         editTitle = findViewById(R.id.editassessmenttitle);
         editStart = findViewById(R.id.editassessmentstart);
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editStart.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Date date;
+                Date today = Calendar.getInstance().getTime();
+                String infoStart = editStart.getText().toString();
+                if(infoStart.equals("")) {
+                    myCalendarStart.setTime(today);
+                }
+                else {
+                    try {
+                        myCalendarStart.setTime(sdf.parse(infoStart));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                new DatePickerDialog(ViewAssessment.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                        myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
         editEnd = findViewById(R.id.editassessmentend);
+        editEnd.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Date date;
+                Date today = Calendar.getInstance().getTime();
+                String infoEnd = editEnd.getText().toString();
+                if(infoEnd.equals("")) {
+                    myCalendarEnd.setTime(today);
+                }
+                else {
+                    try {
+                        myCalendarEnd.setTime(sdf.parse(infoEnd));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                new DatePickerDialog(ViewAssessment.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                        myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        startDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, monthOfYear);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateStart();
+            }
+        };
+
+        endDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendarEnd.set(Calendar.YEAR, year);
+                myCalendarEnd.set(Calendar.MONTH, monthOfYear);
+                myCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateEnd();
+            }
+        };
+
         viewId = findViewById(R.id.viewassessmentid);
         associatedCourse = (Spinner) findViewById(R.id.associatedCourseSpinner);
         ArrayList<Course> courseList = new ArrayList<>();
@@ -102,6 +180,20 @@ public class ViewAssessment extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateStart(){
+        String format = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+
+        editStart.setText(sdf.format(myCalendarStart.getTime()));
+    }
+
+    public void updateEnd(){
+        String format = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+
+        editEnd.setText(sdf.format(myCalendarEnd.getTime()));
     }
 
     public void saveAssessment(View view) {

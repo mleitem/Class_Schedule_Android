@@ -1,10 +1,13 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,21 +22,29 @@ import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ViewCourse extends AppCompatActivity {
     EditText editTitle;
     EditText editStart;
+    DatePickerDialog.OnDateSetListener startDate;
+    final Calendar myCalendarStart = Calendar.getInstance();
     EditText editEnd;
+    DatePickerDialog.OnDateSetListener endDate;
+    final Calendar myCalendarEnd = Calendar.getInstance();
     Spinner courseStatus;
     EditText editInstructorName;
     EditText editInstructorEmail;
     EditText editInstructorPhone;
     TextView viewCourseId;
     Spinner associatedTerm;
-    EditText editTermId;
     EditText editNote;
 
 
@@ -64,7 +75,76 @@ public class ViewCourse extends AppCompatActivity {
         courseStatus.setAdapter(courseAdapter);
         editTitle = findViewById(R.id.editcoursetitle);
         editStart = findViewById(R.id.editcoursestart);
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editStart.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Date date;
+                Date today = Calendar.getInstance().getTime();
+                String infoStart = editStart.getText().toString();
+                if(infoStart.equals("")) {
+                    myCalendarStart.setTime(today);
+                }
+                else {
+                    try {
+                        myCalendarStart.setTime(sdf.parse(infoStart));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                new DatePickerDialog(ViewCourse.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                        myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         editEnd = findViewById(R.id.editcourseend);
+        editEnd.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Date date;
+                Date today = Calendar.getInstance().getTime();
+                String infoEnd = editEnd.getText().toString();
+                if(infoEnd.equals("")) {
+                    myCalendarEnd.setTime(today);
+                }
+                else {
+                    try {
+                        myCalendarEnd.setTime(sdf.parse(infoEnd));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                new DatePickerDialog(ViewCourse.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                        myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        startDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, monthOfYear);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateStart();
+            }
+        };
+
+        endDate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendarEnd.set(Calendar.YEAR, year);
+                myCalendarEnd.set(Calendar.MONTH, monthOfYear);
+                myCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateEnd();
+            }
+        };
+
         editInstructorName = findViewById(R.id.editinstructorname);
         editInstructorEmail = findViewById(R.id.editinstructoremail);
         editInstructorPhone = findViewById(R.id.editinstructorphone);
@@ -130,11 +210,41 @@ public class ViewCourse extends AppCompatActivity {
         adapter.setAssessments(associatedAssessments);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_viewcourse, menu);
+        return true;
+    }
+
+    public void updateStart(){
+        String format = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+
+        editStart.setText(sdf.format(myCalendarStart.getTime()));
+    }
+
+    public void updateEnd(){
+        String format = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+
+        editEnd.setText(sdf.format(myCalendarEnd.getTime()));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
                 this.finish();
+                return true;
+            case R.id.share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "text from the note field");
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
+            case R.id.notify:
                 return true;
         }
         return super.onOptionsItemSelected(item);
