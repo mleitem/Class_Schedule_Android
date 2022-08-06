@@ -1,8 +1,12 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,6 +52,9 @@ public class ViewAssessment extends AppCompatActivity {
 
     Repository repo;
 
+    String myFormat = "MM/dd/yyyy";
+    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +69,7 @@ public class ViewAssessment extends AppCompatActivity {
         assessmentType.setAdapter(assessmentAdapter);
         editTitle = findViewById(R.id.editassessmenttitle);
         editStart = findViewById(R.id.editassessmentstart);
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
         editStart.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -91,7 +97,6 @@ public class ViewAssessment extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Date date;
                 Date today = Calendar.getInstance().getTime();
                 String infoEnd = editEnd.getText().toString();
                 if(infoEnd.equals("")) {
@@ -178,21 +183,51 @@ public class ViewAssessment extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.notify:
+                String startDateFromScreen = editStart.getText().toString();
+                Date startDate = null;
+                try {
+                    startDate = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = startDate.getTime();
+                Intent startIntent = new Intent(ViewAssessment.this, MyReceiver.class);
+                startIntent.putExtra("start", "Assessment: " + title + " starts today." );
+                PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent,0);
+                AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+
+
+                String endDateFromScreen = editEnd.getText().toString();
+                Date endDate = null;
+                try {
+                    endDate = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = endDate.getTime();
+                Intent endIntent = new Intent(ViewAssessment.this, MyReceiver.class);
+                endIntent.putExtra("end", "Assessment: " + title + " ends today." );
+                PendingIntent endSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, endIntent,0);
+                AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
+
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateStart(){
-        String format = "MM/dd/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_viewassessment, menu);
+        return true;
+    }
 
+    public void updateStart(){
         editStart.setText(sdf.format(myCalendarStart.getTime()));
     }
 
     public void updateEnd(){
-        String format = "MM/dd/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-
         editEnd.setText(sdf.format(myCalendarEnd.getTime()));
     }
 

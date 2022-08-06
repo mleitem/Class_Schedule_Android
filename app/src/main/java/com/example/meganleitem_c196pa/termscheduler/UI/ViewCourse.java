@@ -61,6 +61,9 @@ public class ViewCourse extends AppCompatActivity {
 
     Repository repo;
 
+    String myFormat = "MM/dd/yy";
+    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +78,6 @@ public class ViewCourse extends AppCompatActivity {
         courseStatus.setAdapter(courseAdapter);
         editTitle = findViewById(R.id.editcoursetitle);
         editStart = findViewById(R.id.editcoursestart);
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editStart.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -216,16 +217,10 @@ public class ViewCourse extends AppCompatActivity {
     }
 
     public void updateStart(){
-        String format = "MM/dd/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-
         editStart.setText(sdf.format(myCalendarStart.getTime()));
     }
 
     public void updateEnd(){
-        String format = "MM/dd/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-
         editEnd.setText(sdf.format(myCalendarEnd.getTime()));
     }
 

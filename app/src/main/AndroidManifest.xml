@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.meganleitem_c196pa" >
+    package="com.example.meganleitem_c196pa">
 
     <application
         android:allowBackup="true"
@@ -12,18 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MeganLeitemC196PA"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <receiver
+            android:name=".termscheduler.UI.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".termscheduler.UI.ViewAssessment"
             android:exported="true"
-            android:label="Home" />
+            android:label="Home"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".termscheduler.UI.ViewCourse"
             android:exported="true"
-            android:label="Home" />
+            android:label="Home"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".termscheduler.UI.CourseList"
             android:exported="true"
@@ -36,11 +40,10 @@
             android:exported="false"
             android:label="New Term" />
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".termscheduler.UI.ViewTerm"
             android:exported="false"
             android:label="View Term"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".termscheduler.UI.TermList"
             android:exported="false"
@@ -48,8 +51,7 @@
         <activity
             android:name=".termscheduler.UI.MainActivity"
             android:exported="true"
-            android:label="Home" >
-
+            android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
