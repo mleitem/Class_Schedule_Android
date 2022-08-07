@@ -183,7 +183,7 @@ public class ViewAssessment extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.notify:
+            case R.id.notifystart:
                 String startDateFromScreen = editStart.getText().toString();
                 Date startDate = null;
                 try {
@@ -193,12 +193,13 @@ public class ViewAssessment extends AppCompatActivity {
                 }
                 Long startTrigger = startDate.getTime();
                 Intent startIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                startIntent.putExtra("start", "Assessment: " + title + " starts today." );
+                startIntent.putExtra("type", "Assessment: " + title + " starts today." );
                 PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent,0);
                 AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+                return true;
 
-
+            case R.id.notifyend:
                 String endDateFromScreen = editEnd.getText().toString();
                 Date endDate = null;
                 try {
@@ -208,7 +209,7 @@ public class ViewAssessment extends AppCompatActivity {
                 }
                 Long endTrigger = endDate.getTime();
                 Intent endIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                endIntent.putExtra("end", "Assessment: " + title + " ends today." );
+                endIntent.putExtra("type", "Assessment: " + title + " ends today." );
                 PendingIntent endSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, endIntent,0);
                 AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);

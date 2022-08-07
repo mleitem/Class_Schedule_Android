@@ -38,6 +38,7 @@
     <string name="notify">Notify</string>
     <string name="channel_name">mychannel</string>
     <string name="channel_description">mychanneldescription</string>
+    <string name="notify_on_start_date">Notify on Start Date</string>
     <string-array name="assessment_type">
         <item>Objective Assessment</item>
         <item>Performance Assessment</item>
