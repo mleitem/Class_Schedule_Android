@@ -4,7 +4,7 @@
     <item android:title="@string/notify_on_start_date"
         android:orderInCategory="100"
         android:id="@+id/notifystart"/>
-    <item android:title="Notify on End Date"
+    <item android:title="@string/notify_on_end_date"
         android:orderInCategory="100"
         android:id="@+id/notifyend"/>
 </menu>

@@ -15,12 +15,11 @@ import com.example.meganleitem_c196pa.R;
 
 public class MyReceiver extends BroadcastReceiver {
 
-    String start_id = "start";
+    String start_assessment_id = "assessment start";
+    String start_course_id = "course start";
+    String end_assessment_id = "assessment start";
+    String end_course_id = "course end";
     static int notificationID;
-
-
-    String end_id = "end";
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,13 +27,13 @@ public class MyReceiver extends BroadcastReceiver {
         String type = intent.getStringExtra("type");
 
         // Assessment Start Date
-        if(type.contains("starts")){
+        if(type.contains("starts") && type.contains("Assessment")){
             System.out.println("This is the start notification");
             Toast startToast = Toast.makeText(context,"Assessment Starting Today", Toast.LENGTH_LONG);
             startToast.show();
-            createNotificationChannel(context, start_id);
+            createNotificationChannel(context, start_assessment_id);
 
-            Notification assessmentStart = new NotificationCompat.Builder(context, start_id)
+            Notification assessmentStart = new NotificationCompat.Builder(context, start_assessment_id)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentText(intent.getStringExtra("type"))
                     .setContentTitle("Assessment Starting Today").build();
@@ -43,18 +42,48 @@ public class MyReceiver extends BroadcastReceiver {
         }
 
         // Assessment End Date
-        if(type.contains("ends")){
+        if(type.contains("ends") && type.contains("Assessment")){
             System.out.println("This is the end notification");
             Toast endToast = Toast.makeText(context, "Assessment Ending Today", Toast.LENGTH_LONG);
             endToast.show();
-            createNotificationChannel(context, end_id);
+            createNotificationChannel(context, end_assessment_id);
 
-            Notification assessmentEnd = new NotificationCompat.Builder(context, end_id)
+            Notification assessmentEnd = new NotificationCompat.Builder(context, end_assessment_id)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentText(intent.getStringExtra("type"))
                     .setContentTitle("Assessment Ending Today").build();
             NotificationManager endManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             endManager.notify(notificationID++, assessmentEnd);
+        }
+
+        // Course Start Date
+        if(type.contains("starts") && type.contains("Course")){
+            System.out.println("This is the course start notification");
+            Toast startToast = Toast.makeText(context,"Course Starting Today", Toast.LENGTH_LONG);
+            startToast.show();
+            createNotificationChannel(context, start_course_id);
+
+            Notification courseStart = new NotificationCompat.Builder(context, start_course_id)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentText(intent.getStringExtra("type"))
+                    .setContentTitle("Course Starting Today").build();
+            NotificationManager startManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            startManager.notify(notificationID++, courseStart);
+        }
+
+        // Course End Date
+        if(type.contains("ends") && type.contains("Course")){
+            System.out.println("This is the course end notification");
+            Toast endToast = Toast.makeText(context, "Course Ending Today", Toast.LENGTH_LONG);
+            endToast.show();
+            createNotificationChannel(context, end_course_id);
+
+            Notification courseEnd = new NotificationCompat.Builder(context, end_course_id)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentText(intent.getStringExtra("type"))
+                    .setContentTitle("Course Ending Today").build();
+            NotificationManager endManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            endManager.notify(notificationID++, courseEnd);
         }
     }
 

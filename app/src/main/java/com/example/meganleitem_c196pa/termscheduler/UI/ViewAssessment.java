@@ -197,6 +197,7 @@ public class ViewAssessment extends AppCompatActivity {
                 PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent,0);
                 AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+
                 return true;
 
             case R.id.notifyend:

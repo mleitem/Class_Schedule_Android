@@ -1,6 +1,9 @@
 package com.example.meganleitem_c196pa.termscheduler.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -239,7 +242,37 @@ public class ViewCourse extends AppCompatActivity {
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
                 return true;
-            case R.id.notify:
+            case R.id.notifystart:
+                String startDateFromScreen = editStart.getText().toString();
+                Date startDate = null;
+                try {
+                    startDate = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = startDate.getTime();
+                Intent startIntent = new Intent(ViewCourse.this, MyReceiver.class);
+                startIntent.putExtra("type", "Course: " + title + " starts today." );
+                PendingIntent startSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, startIntent,0);
+                AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+
+                return true;
+            case R.id.notifyend:
+                String endDateFromScreen = editEnd.getText().toString();
+                Date endDate = null;
+                try {
+                    endDate = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = endDate.getTime();
+                Intent endIntent = new Intent(ViewCourse.this, MyReceiver.class);
+                endIntent.putExtra("type", "Course: " + title + " ends today." );
+                PendingIntent endSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, endIntent,0);
+                AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

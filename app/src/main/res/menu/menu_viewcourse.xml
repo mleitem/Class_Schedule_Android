@@ -4,7 +4,10 @@
     <item android:title="Share Note"
         android:orderInCategory="100"
         android:id="@+id/share"/>
-    <item android:title="Notify"
+    <item android:title="@string/notify_on_start_date"
         android:orderInCategory="100"
-        android:id="@+id/notify"/>
+        android:id="@+id/notifystart"/>
+    <item android:title="@string/notify_on_end_date"
+        android:orderInCategory="100"
+        android:id="@+id/notifyend"/>
 </menu>
