@@ -65,7 +65,7 @@ public class ViewCourse extends AppCompatActivity {
 
     Repository repo;
 
-    String myFormat = "MM/dd/yy";
+    String myFormat = "MM/dd/yyyy";
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
     @Override
