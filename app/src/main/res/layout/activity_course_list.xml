@@ -26,17 +26,17 @@
         android:layout_height="60dp"
         android:layout_marginStart="47dp"
         android:layout_marginTop="742dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="53dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="47dp"
         android:clickable="true"
         android:contentDescription="@string/add_button"
         android:onClick="enterNewCourse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.388"
         app:layout_constraintStart_toEndOf="@+id/button3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.766"
+        app:layout_constraintVertical_bias="0.805"
         app:srcCompat="@drawable/ic_launcher_add2_foreground" />
 
     <androidx.recyclerview.widget.RecyclerView

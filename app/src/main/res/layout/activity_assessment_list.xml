@@ -11,18 +11,16 @@
         android:id="@+id/floatingActionButton5"
         android:layout_width="67dp"
         android:layout_height="60dp"
-        android:layout_marginStart="47dp"
         android:layout_marginTop="742dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="53dp"
         android:clickable="true"
         android:contentDescription="@string/add_button"
         android:onClick="enterNewAssessment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701"
+        app:layout_constraintVertical_bias="0.806"
         app:srcCompat="@drawable/ic_launcher_add2_foreground" />
 
     <androidx.recyclerview.widget.RecyclerView

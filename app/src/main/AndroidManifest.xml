@@ -21,12 +21,12 @@
         <activity
             android:name=".termscheduler.UI.ViewAssessment"
             android:exported="true"
-            android:label="Home"
+            android:label="View Assessment"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".termscheduler.UI.ViewCourse"
             android:exported="true"
-            android:label="Home"
+            android:label="View Course"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".termscheduler.UI.CourseList"
@@ -34,11 +34,8 @@
             android:label="My Courses" />
         <activity
             android:name=".termscheduler.UI.AssessmentList"
-            android:exported="false" />
-        <activity
-            android:name=".termscheduler.UI.NewTerm"
             android:exported="false"
-            android:label="New Term" />
+            android:label="My Assessments" />
         <activity
             android:name=".termscheduler.UI.ViewTerm"
             android:exported="false"

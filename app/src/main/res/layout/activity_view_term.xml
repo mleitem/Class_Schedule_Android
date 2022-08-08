@@ -104,21 +104,24 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="saveTerm"
                     android:text="@string/save" />
             </LinearLayout>
 
-            <Space
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
-                android:layout_height="58dp" />
+                android:layout_height="58dp"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/courses_this_term" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/associatedCoursesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#C1888E93" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
