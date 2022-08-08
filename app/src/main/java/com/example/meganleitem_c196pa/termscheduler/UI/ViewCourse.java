@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -273,6 +274,21 @@ public class ViewCourse extends AppCompatActivity {
                 AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
 
+                return true;
+            case R.id.delete:
+                List<Course> courses = repo.getAllCourses();
+                Course course = null;
+                for(int i = 0; i < courses.size(); i ++){
+                    int j = Integer.parseInt(viewCourseId.getText().toString());
+                    int k = courses.get(i).getCourseId();
+                    if(j == k){
+                        course = courses.get(i);
+                    }
+                }
+                repo.delete(course);
+                Toast.makeText(ViewCourse.this, course.getCourseTitle() + " was deleted.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ViewCourse.this, CourseList.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

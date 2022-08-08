@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.meganleitem_c196pa.R;
 import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
@@ -155,10 +156,48 @@ public class ViewTerm extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.delete:
+                List<Term> terms = repo.getAllTerms();
+                Term term = null;
+                for(int i = 0; i < terms.size(); i ++){
+                    int j = Integer.parseInt(viewId.getText().toString());
+                    int k = terms.get(i).getTermId();
+                    if(j == k){
+                        term = terms.get(i);
+                    }
+                }
+                deleteTerm(term);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_viewterm, menu);
+        return true;
+    }
+
+    public void deleteTerm(Term term) {
+        List<Course> courses = repo.getAllCourses();
+        int termID = Integer.parseInt(viewId.getText().toString());
+        int numCourses = 0;
+        for(int i = 0; i < courses.size(); i++){
+            int n = courses.get(i).getTermId();
+            if(n == termID){
+                numCourses++;
+            }
+        }
+        if (numCourses > 0) {
+            Toast.makeText(ViewTerm.this, term.getTermTitle() + " cannot be deleted. Please remove associated courses.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            repo.delete(term);
+            Toast.makeText(ViewTerm.this, term.getTermTitle() + " was deleted.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ViewTerm.this, TermList.class);
+            startActivity(intent);
+        }
+
+    }
     public void updateStart(){
         String format = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);

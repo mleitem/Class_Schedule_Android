@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -215,6 +217,21 @@ public class ViewAssessment extends AppCompatActivity {
                 AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
 
+                return true;
+            case R.id.delete:
+                List<Assessment> assessments = repo.getAllAssessments();
+                Assessment assessment = null;
+                for(int i = 0; i < assessments.size(); i ++){
+                    int j = Integer.parseInt(viewId.getText().toString());
+                    int k = assessments.get(i).getAssessmentId();
+                    if(j == k){
+                        assessment = assessments.get(i);
+                    }
+                }
+                repo.delete(assessment);
+                Toast.makeText(ViewAssessment.this, assessment.getAssessmentTitle() + " was deleted.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ViewAssessment.this, AssessmentList.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

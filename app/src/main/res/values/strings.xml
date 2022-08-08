@@ -40,6 +40,10 @@
     <string name="channel_description">mychanneldescription</string>
     <string name="notify_on_start_date">Notify on Start Date</string>
     <string name="notify_on_end_date">Notify on End Date</string>
+    <string name="delete_term">Delete Term</string>
+    <string name="delete_assessment">Delete Assessment</string>
+    <string name="delete_course">Delete Course</string>
+    <string name="share_note">Share Note</string>
     <string-array name="assessment_type">
         <item>Objective Assessment</item>
         <item>Performance Assessment</item>

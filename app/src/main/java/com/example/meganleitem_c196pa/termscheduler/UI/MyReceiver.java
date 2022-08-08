@@ -28,7 +28,6 @@ public class MyReceiver extends BroadcastReceiver {
 
         // Assessment Start Date
         if(type.contains("starts") && type.contains("Assessment")){
-            System.out.println("This is the start notification");
             Toast startToast = Toast.makeText(context,"Assessment Starting Today", Toast.LENGTH_LONG);
             startToast.show();
             createNotificationChannel(context, start_assessment_id);
@@ -43,7 +42,6 @@ public class MyReceiver extends BroadcastReceiver {
 
         // Assessment End Date
         if(type.contains("ends") && type.contains("Assessment")){
-            System.out.println("This is the end notification");
             Toast endToast = Toast.makeText(context, "Assessment Ending Today", Toast.LENGTH_LONG);
             endToast.show();
             createNotificationChannel(context, end_assessment_id);
@@ -58,7 +56,6 @@ public class MyReceiver extends BroadcastReceiver {
 
         // Course Start Date
         if(type.contains("starts") && type.contains("Course")){
-            System.out.println("This is the course start notification");
             Toast startToast = Toast.makeText(context,"Course Starting Today", Toast.LENGTH_LONG);
             startToast.show();
             createNotificationChannel(context, start_course_id);
@@ -73,7 +70,6 @@ public class MyReceiver extends BroadcastReceiver {
 
         // Course End Date
         if(type.contains("ends") && type.contains("Course")){
-            System.out.println("This is the course end notification");
             Toast endToast = Toast.makeText(context, "Course Ending Today", Toast.LENGTH_LONG);
             endToast.show();
             createNotificationChannel(context, end_course_id);

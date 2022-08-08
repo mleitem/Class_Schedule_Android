@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Share Note"
+    <item android:title="@string/share_note"
         android:orderInCategory="100"
         android:id="@+id/share"/>
     <item android:title="@string/notify_on_start_date"
@@ -10,4 +10,7 @@
     <item android:title="@string/notify_on_end_date"
         android:orderInCategory="100"
         android:id="@+id/notifyend"/>
+    <item android:title="@string/delete_course"
+        android:orderInCategory="100"
+        android:id="@+id/delete"/>
 </menu>
