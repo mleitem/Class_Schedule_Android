@@ -6,6 +6,10 @@
         <entry key="app/src/main/res/drawable/ic_launcher_add2_background.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_launcher_add2_foreground.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_launcher_add_foreground.xml" value="0.1575" />
+        <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_background.xml" value="0.309" />
+        <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_circle_background.xml" value="0.309" />
+        <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_circle_foreground.xml" value="0.309" />
+        <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_foreground.xml" value="0.309" />
         <entry key="app/src/main/res/layout-land/activity_assessment_list.xml" value="0.2588183421516755" />
         <entry key="app/src/main/res/layout-land/activity_course_list.xml" value="0.2588183421516755" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.2588183421516755" />

@@ -11,7 +11,7 @@
         android:layout_width="218dp"
         android:layout_height="46dp"
         android:gravity="center"
-        android:text="Welcome to the Scheduling App!"
+        android:text="@string/welcome_to_class_schedule_creator"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
