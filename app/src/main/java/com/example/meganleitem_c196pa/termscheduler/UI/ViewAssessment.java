@@ -181,6 +181,7 @@ public class ViewAssessment extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String t = editTitle.getText().toString();
         switch(item.getItemId()) {
             case android.R.id.home:
                 this.finish();
@@ -195,7 +196,7 @@ public class ViewAssessment extends AppCompatActivity {
                 }
                 Long startTrigger = startDate.getTime();
                 Intent startIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                startIntent.putExtra("type", "Assessment: " + title + " starts today." );
+                startIntent.putExtra("type", "Assessment: " + t + " starts today." );
                 PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent,0);
                 AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
@@ -212,7 +213,7 @@ public class ViewAssessment extends AppCompatActivity {
                 }
                 Long endTrigger = endDate.getTime();
                 Intent endIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                endIntent.putExtra("type", "Assessment: " + title + " ends today." );
+                endIntent.putExtra("type", "Assessment: " + t + " ends today." );
                 PendingIntent endSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, endIntent,0);
                 AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
@@ -268,6 +269,7 @@ public class ViewAssessment extends AppCompatActivity {
             repo.update(assessment);
         }
 
+        Toast.makeText(ViewAssessment.this, "Save Successful", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(ViewAssessment.this, AssessmentList.class);
         startActivity(intent);
 

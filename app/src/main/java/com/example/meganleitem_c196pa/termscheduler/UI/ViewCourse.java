@@ -230,15 +230,17 @@ public class ViewCourse extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String t = editTitle.getText().toString();
         switch(item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
             case R.id.share:
                 Intent sendIntent = new Intent();
+                String note = editNote.getText().toString();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "text from the note field");
-                sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, note);
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "My Course Notes");
                 sendIntent.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
@@ -253,7 +255,7 @@ public class ViewCourse extends AppCompatActivity {
                 }
                 Long startTrigger = startDate.getTime();
                 Intent startIntent = new Intent(ViewCourse.this, MyReceiver.class);
-                startIntent.putExtra("type", "Course: " + title + " starts today." );
+                startIntent.putExtra("type", "Course: " + t + " starts today." );
                 PendingIntent startSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, startIntent,0);
                 AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
@@ -269,7 +271,7 @@ public class ViewCourse extends AppCompatActivity {
                 }
                 Long endTrigger = endDate.getTime();
                 Intent endIntent = new Intent(ViewCourse.this, MyReceiver.class);
-                endIntent.putExtra("type", "Course: " + title + " ends today." );
+                endIntent.putExtra("type", "Course: " + t + " ends today." );
                 PendingIntent endSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, endIntent,0);
                 AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
@@ -318,6 +320,7 @@ public class ViewCourse extends AppCompatActivity {
             repo.update(course);
         }
 
+        Toast.makeText(ViewCourse.this, "Save Successful", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(ViewCourse.this, CourseList.class);
         startActivity(intent);
 

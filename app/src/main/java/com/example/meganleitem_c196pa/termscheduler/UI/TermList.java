@@ -50,6 +50,11 @@ public class TermList extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void enterAssessmentList(View view) {
+        Intent intent = new Intent(TermList.this, AssessmentList.class);
+        startActivity(intent);
+    }
+
     public void enterNewTerm(View view) {
         Intent intent = new Intent(TermList.this, ViewTerm.class);
         startActivity(intent);

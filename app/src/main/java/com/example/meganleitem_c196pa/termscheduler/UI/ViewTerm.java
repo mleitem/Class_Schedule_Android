@@ -225,6 +225,7 @@ public class ViewTerm extends AppCompatActivity {
             repo.update(term);
         }
 
+        Toast.makeText(ViewTerm.this, "Save Successful", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(ViewTerm.this, TermList.class);
         startActivity(intent);
 

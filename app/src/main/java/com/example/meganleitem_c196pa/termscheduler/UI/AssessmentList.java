@@ -46,6 +46,16 @@ public class AssessmentList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void enterTermList(View view){
+        Intent intent = new Intent(AssessmentList.this, TermList.class);
+        startActivity(intent);
+    }
+
+    public void enterCourseList(View view){
+        Intent intent = new Intent(AssessmentList.this, CourseList.class);
+        startActivity(intent);
+    }
+
     public void enterNewAssessment(View view) {
         Intent intent = new Intent(AssessmentList.this, ViewAssessment.class);
         startActivity(intent);
