@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="saveAssessment"
+    tools:context=".termscheduler.UI.ViewAssessment">
+
+    <ScrollView
+        android:layout_width="694dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            //Assessment Type
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/assessment_type" />
+
+                <Spinner
+                    android:id="@+id/assessmentTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            //Assessment Title
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/assessment_title" />
+
+                <EditText
+                    android:id="@+id/editassessmenttitle"
+                    android:layout_width="557dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/semester_midterm" />
+            </LinearLayout>
+
+            //Start Date
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start_date" />
+
+                    <EditText
+                        android:id="@+id/editassessmentstart"
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_06_01_2022" />
+                </LinearLayout>
+
+                // End Date
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/end_date" />
+
+                    <EditText
+                        android:id="@+id/editassessmentend"
+                        android:layout_width="177dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_06_08_2022" />
+                </LinearLayout>
+
+            </LinearLayout><![CDATA[
+            -->
+            ]]>
+
+            // Assessment ID
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/assessment_id" />
+
+                <TextView
+                    android:id="@+id/viewassessmentid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/textview" />
+            </LinearLayout>
+
+            // Associated Course
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Course:" />
+
+                <Spinner
+                    android:id="@+id/associatedCourseSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            // Save
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="saveAssessment"
+                    android:text="@string/save" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
