@@ -240,6 +240,11 @@ public class ViewAssessment extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_viewassessment, menu);
+        if(id == -1){
+            MenuItem delete = menu.findItem(R.id.delete);
+            delete.setVisible(false);
+            this.invalidateOptionsMenu();
+        }
         return true;
     }
 

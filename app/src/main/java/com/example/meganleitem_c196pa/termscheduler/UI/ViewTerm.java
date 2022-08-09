@@ -173,7 +173,9 @@ public class ViewTerm extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_viewterm, menu);
+        if(Integer.parseInt(viewId.getText().toString()) != -1) {
+            getMenuInflater().inflate(R.menu.menu_viewterm, menu);
+        }
         return true;
     }
 
