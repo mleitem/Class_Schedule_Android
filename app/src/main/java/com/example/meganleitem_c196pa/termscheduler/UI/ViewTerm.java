@@ -137,6 +137,9 @@ public class ViewTerm extends AppCompatActivity {
         editEnd.setText(end);
         viewId.setText(Integer.toString(id));
 
+        if(id == -1){
+            setTitle("New Term");
+        }
         RecyclerView recyclerView = findViewById(R.id.associatedCoursesRecyclerView);
         List<Course> associatedCourses = new ArrayList<>();
         for(Course c: repo.getAllCourses()){
@@ -217,20 +220,25 @@ public class ViewTerm extends AppCompatActivity {
     public void saveTerm(View view) {
         Term term;
 
-        if(id == -1) {
-            int newId = repo.getAllTerms().get(repo.getAllTerms().size() - 1).getTermId() + 1;
-            term = new Term(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString());
-            repo.insert(term);
+        if(editTitle.getText().toString().isEmpty()) {
+            Toast.makeText(ViewTerm.this, "Please enter a term title before saving.", Toast.LENGTH_LONG).show();
         }
+
         else {
-            term = new Term(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString());
-            repo.update(term);
+            if (id == -1) {
+                int newId = repo.getAllTerms().get(repo.getAllTerms().size() - 1).getTermId() + 1;
+                term = new Term(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString());
+                repo.insert(term);
+            } else {
+                term = new Term(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString());
+                repo.update(term);
+            }
+
+            Toast.makeText(ViewTerm.this, "Save Successful", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ViewTerm.this, TermList.class);
+            startActivity(intent);
+
         }
-
-        Toast.makeText(ViewTerm.this, "Save Successful", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(ViewTerm.this, TermList.class);
-        startActivity(intent);
-
     }
 }
 

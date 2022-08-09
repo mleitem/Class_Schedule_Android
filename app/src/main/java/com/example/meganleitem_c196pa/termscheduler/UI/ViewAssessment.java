@@ -161,6 +161,9 @@ public class ViewAssessment extends AppCompatActivity {
         editEnd.setText(end);
         viewId.setText(Integer.toString(id));
 
+        if(id == -1) {
+            setTitle("New Assessment");
+        }
         if(id != -1) {
             for (int i = 0; i < courseList.size(); ++i) {
                 if (course == courseList.get(i).getCourseId()) {
@@ -188,36 +191,44 @@ public class ViewAssessment extends AppCompatActivity {
                 return true;
             case R.id.notifystart:
                 String startDateFromScreen = editStart.getText().toString();
-                Date startDate = null;
-                try {
-                    startDate = sdf.parse(startDateFromScreen);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(startDateFromScreen.isEmpty()){
+                    Toast.makeText(ViewAssessment.this, "Please enter a start date.", Toast.LENGTH_LONG).show();
                 }
-                Long startTrigger = startDate.getTime();
-                Intent startIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                startIntent.putExtra("type", "Assessment: " + t + " starts today." );
-                PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent,0);
-                AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
-
+                else {
+                    Date startDate = null;
+                    try {
+                        startDate = sdf.parse(startDateFromScreen);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Long startTrigger = startDate.getTime();
+                    Intent startIntent = new Intent(ViewAssessment.this, MyReceiver.class);
+                    startIntent.putExtra("type", "Assessment: " + t + " starts today.");
+                    PendingIntent startSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, startIntent, 0);
+                    AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+                }
                 return true;
 
             case R.id.notifyend:
                 String endDateFromScreen = editEnd.getText().toString();
-                Date endDate = null;
-                try {
-                    endDate = sdf.parse(endDateFromScreen);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(endDateFromScreen.isEmpty()){
+                    Toast.makeText(ViewAssessment.this, "Please enter an end date.", Toast.LENGTH_LONG).show();
                 }
-                Long endTrigger = endDate.getTime();
-                Intent endIntent = new Intent(ViewAssessment.this, MyReceiver.class);
-                endIntent.putExtra("type", "Assessment: " + t + " ends today." );
-                PendingIntent endSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, endIntent,0);
-                AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
-
+                else {
+                    Date endDate = null;
+                    try {
+                        endDate = sdf.parse(endDateFromScreen);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Long endTrigger = endDate.getTime();
+                    Intent endIntent = new Intent(ViewAssessment.this, MyReceiver.class);
+                    endIntent.putExtra("type", "Assessment: " + t + " ends today.");
+                    PendingIntent endSender = PendingIntent.getBroadcast(ViewAssessment.this, MainActivity.numAlert++, endIntent, 0);
+                    AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
+                }
                 return true;
             case R.id.delete:
                 List<Assessment> assessments = repo.getAllAssessments();
@@ -239,11 +250,9 @@ public class ViewAssessment extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_viewassessment, menu);
-        if(id == -1){
-            MenuItem delete = menu.findItem(R.id.delete);
-            delete.setVisible(false);
-            this.invalidateOptionsMenu();
+        if(id != -1){
+            getMenuInflater().inflate(R.menu.menu_viewassessment, menu);
+
         }
         return true;
     }
@@ -263,21 +272,25 @@ public class ViewAssessment extends AppCompatActivity {
 
         String newType = assessmentType.getSelectedItem().toString();
 
-        if(id == -1) {
-            int newId = repo.getAllAssessments().get(repo.getAllAssessments().size() - 1).getAssessmentId() + 1;
-
-            assessment = new Assessment(newId, newType, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), courseId);
-            repo.insert(assessment);
+        if(editTitle.getText().toString().isEmpty()) {
+            Toast.makeText(ViewAssessment.this, "Please enter an assessment title before saving.", Toast.LENGTH_LONG).show();
         }
+
         else {
-            assessment = new Assessment(id, newType, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), courseId);
-            repo.update(assessment);
+            if (id == -1) {
+                int newId = repo.getAllAssessments().get(repo.getAllAssessments().size() - 1).getAssessmentId() + 1;
+
+                assessment = new Assessment(newId, newType, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), courseId);
+                repo.insert(assessment);
+            } else {
+                assessment = new Assessment(id, newType, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), courseId);
+                repo.update(assessment);
+            }
+
+            Toast.makeText(ViewAssessment.this, "Save Successful", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ViewAssessment.this, AssessmentList.class);
+            startActivity(intent);
         }
-
-        Toast.makeText(ViewAssessment.this, "Save Successful", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(ViewAssessment.this, AssessmentList.class);
-        startActivity(intent);
-
 
     }
 }

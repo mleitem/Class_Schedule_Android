@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -176,6 +177,7 @@ public class ViewCourse extends AppCompatActivity {
         note = getIntent().getStringExtra("note");
 
 
+
         editTitle.setText(title);
         editStart.setText(start);
         editEnd.setText(end);
@@ -184,6 +186,10 @@ public class ViewCourse extends AppCompatActivity {
         editInstructorPhone.setText(instructorPhone);
         viewCourseId.setText(Integer.toString(id));
         editNote.setText(note);
+
+        if(id == -1){
+            setTitle("New Course");
+        }
 
         if(id != -1) {
             for (int i = 0; i < termList.size(); ++i) {
@@ -216,11 +222,8 @@ public class ViewCourse extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_viewcourse, menu);
-        if(id == -1){
-           MenuItem delete = menu.findItem(R.id.delete);
-           delete.setVisible(false);
-           this.invalidateOptionsMenu();
+        if(id != -1){
+            getMenuInflater().inflate(R.menu.menu_viewcourse, menu);
         }
 
         return true;
@@ -253,35 +256,45 @@ public class ViewCourse extends AppCompatActivity {
                 return true;
             case R.id.notifystart:
                 String startDateFromScreen = editStart.getText().toString();
-                Date startDate = null;
-                try {
-                    startDate = sdf.parse(startDateFromScreen);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(startDateFromScreen.isEmpty()){
+                    Toast.makeText(ViewCourse.this, "Please enter a start date.", Toast.LENGTH_LONG).show();
                 }
-                Long startTrigger = startDate.getTime();
-                Intent startIntent = new Intent(ViewCourse.this, MyReceiver.class);
-                startIntent.putExtra("type", "Course: " + t + " starts today." );
-                PendingIntent startSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, startIntent,0);
-                AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+                else{
+                    Date startDate = null;
+                    try {
+                        startDate = sdf.parse(startDateFromScreen);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Long startTrigger = startDate.getTime();
+                    Intent startIntent = new Intent(ViewCourse.this, MyReceiver.class);
+                    startIntent.putExtra("type", "Course: " + t + " starts today." );
+                    PendingIntent startSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, startIntent,0);
+                    AlarmManager startAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    startAlarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, startSender);
+                }
+
 
                 return true;
             case R.id.notifyend:
                 String endDateFromScreen = editEnd.getText().toString();
-                Date endDate = null;
-                try {
-                    endDate = sdf.parse(endDateFromScreen);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if(endDateFromScreen.isEmpty()){
+                    Toast.makeText(ViewCourse.this, "Please enter an end date.", Toast.LENGTH_LONG).show();
                 }
-                Long endTrigger = endDate.getTime();
-                Intent endIntent = new Intent(ViewCourse.this, MyReceiver.class);
-                endIntent.putExtra("type", "Course: " + t + " ends today." );
-                PendingIntent endSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, endIntent,0);
-                AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
-
+                else {
+                    Date endDate = null;
+                    try {
+                        endDate = sdf.parse(endDateFromScreen);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Long endTrigger = endDate.getTime();
+                    Intent endIntent = new Intent(ViewCourse.this, MyReceiver.class);
+                    endIntent.putExtra("type", "Course: " + t + " ends today.");
+                    PendingIntent endSender = PendingIntent.getBroadcast(ViewCourse.this, MainActivity.numAlert++, endIntent, 0);
+                    AlarmManager endAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    endAlarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, endSender);
+                }
                 return true;
             case R.id.delete:
                 List<Course> courses = repo.getAllCourses();
@@ -293,8 +306,18 @@ public class ViewCourse extends AppCompatActivity {
                         course = courses.get(i);
                     }
                 }
+                List<Assessment> assessments = repo.getAllAssessments();
+                Assessment assessment = null;
+                for(int i = 0; i < assessments.size(); i++){
+                    int cID = assessments.get(i).getCourseId();
+                    if(cID == Integer.parseInt(viewCourseId.getText().toString())){
+                        assessment = assessments.get(i);
+                        repo.delete(assessment);
+                    }
+                }
+
                 repo.delete(course);
-                Toast.makeText(ViewCourse.this, course.getCourseTitle() + " was deleted.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ViewCourse.this, course.getCourseTitle() + " and associated assessments were deleted.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ViewCourse.this, CourseList.class);
                 startActivity(intent);
                 return true;
@@ -309,27 +332,32 @@ public class ViewCourse extends AppCompatActivity {
 
         String newStatus = courseStatus.getSelectedItem().toString();
 
-        if(id == -1) {
-            int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
-
-
-            course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), newStatus, editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
-            course.setNote(editNote.getText().toString());
-
-            repo.insert(course);
+        if(editTitle.getText().toString().isEmpty()) {
+            Toast.makeText(ViewCourse.this, "Please enter a course title before saving.", Toast.LENGTH_LONG).show();
         }
+
         else {
-            course = new Course(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), newStatus, editInstructorName.getText().toString(),
-                    editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
-            course.setNote(editNote.getText().toString());
-            repo.update(course);
+            if (id == -1) {
+                int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
+
+
+                course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), newStatus, editInstructorName.getText().toString(),
+                        editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+                course.setNote(editNote.getText().toString());
+
+                repo.insert(course);
+            } else {
+                course = new Course(id, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), newStatus, editInstructorName.getText().toString(),
+                        editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);
+                course.setNote(editNote.getText().toString());
+                repo.update(course);
+            }
+
+            Toast.makeText(ViewCourse.this, "Save Successful", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ViewCourse.this, CourseList.class);
+            startActivity(intent);
+
         }
-
-        Toast.makeText(ViewCourse.this, "Save Successful", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(ViewCourse.this, CourseList.class);
-        startActivity(intent);
-
     }
 }
 
