@@ -327,19 +327,28 @@ public class ViewCourse extends AppCompatActivity {
 
     public void saveCourse(View view) {
         Course course;
-        Term term = (Term) associatedTerm.getSelectedItem();
-        int termId = term.getTermId();
-
         String newStatus = courseStatus.getSelectedItem().toString();
 
         if(editTitle.getText().toString().isEmpty()) {
             Toast.makeText(ViewCourse.this, "Please enter a course title before saving.", Toast.LENGTH_LONG).show();
         }
 
-        else {
-            if (id == -1) {
-                int newId = repo.getAllCourses().get(repo.getAllCourses().size() - 1).getCourseId() + 1;
+        else if(associatedTerm.getSelectedItem() == null){
+            Toast.makeText(ViewCourse.this, "Please choose or create a term before saving.", Toast.LENGTH_LONG).show();
+        }
 
+        else {
+            Term term = (Term) associatedTerm.getSelectedItem();
+            int termId = term.getTermId();
+            int newId;
+            if (id == -1) {
+                int size = repo.getAllCourses().size();
+                if(size > 0){
+                    newId = repo.getAllCourses().get(size - 1).getCourseId() + 1;
+                }
+                else {
+                    newId = 1;
+                }
 
                 course = new Course(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), newStatus, editInstructorName.getText().toString(),
                         editInstructorEmail.getText().toString(), editInstructorPhone.getText().toString(), termId);

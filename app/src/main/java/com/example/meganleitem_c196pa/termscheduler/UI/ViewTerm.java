@@ -225,8 +225,15 @@ public class ViewTerm extends AppCompatActivity {
         }
 
         else {
+            int newId;
             if (id == -1) {
-                int newId = repo.getAllTerms().get(repo.getAllTerms().size() - 1).getTermId() + 1;
+                int size = repo.getAllTerms().size();
+                if (size > 0) {
+                    newId = repo.getAllTerms().get(size - 1).getTermId() + 1;
+                }
+                else {
+                    newId = 1;
+                }
                 term = new Term(newId, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString());
                 repo.insert(term);
             } else {

@@ -267,19 +267,26 @@ public class ViewAssessment extends AppCompatActivity {
 
     public void saveAssessment(View view) {
         Assessment assessment;
-        Course course = (Course) associatedCourse.getSelectedItem();
-        int courseId = course.getCourseId();
-
         String newType = assessmentType.getSelectedItem().toString();
-
         if(editTitle.getText().toString().isEmpty()) {
             Toast.makeText(ViewAssessment.this, "Please enter an assessment title before saving.", Toast.LENGTH_LONG).show();
         }
+        else if(associatedCourse.getSelectedItem() == null){
+            Toast.makeText(ViewAssessment.this, "Please choose or create a course before saving.", Toast.LENGTH_LONG).show();
+        }
 
         else {
+            Course course = (Course) associatedCourse.getSelectedItem();
+            int courseId = course.getCourseId();
+            int newId;
             if (id == -1) {
-                int newId = repo.getAllAssessments().get(repo.getAllAssessments().size() - 1).getAssessmentId() + 1;
-
+                int size = repo.getAllAssessments().size();
+                if(size > 0) {
+                    newId = repo.getAllAssessments().get(size - 1).getAssessmentId() + 1;
+                }
+                else {
+                    newId = 1;
+                }
                 assessment = new Assessment(newId, newType, editTitle.getText().toString(), editStart.getText().toString(), editEnd.getText().toString(), courseId);
                 repo.insert(assessment);
             } else {
