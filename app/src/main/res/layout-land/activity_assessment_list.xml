@@ -43,7 +43,7 @@
             android:layout_width="441dp"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
-            android:hint="@string/search_assessments2"
+            android:hint="@string/search_by_assessment_title"
             android:textAlignment="center" />
 
         <Button

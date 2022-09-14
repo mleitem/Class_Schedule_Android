@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.example.meganleitem_c196pa.R;
 import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
-import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,6 @@ public class AssessmentList extends AppCompatActivity {
             String assessmentTitle = assessment.getAssessmentTitle();
             if(assessmentTitle.contains(title)){
                 filteredAssessments.add(assessment);
-                System.out.println(assessmentTitle);
             }
         }
         if(searchAssessments.getText().toString().isEmpty()){

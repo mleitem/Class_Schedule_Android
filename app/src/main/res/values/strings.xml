@@ -54,6 +54,9 @@
     <string name="search">Search</string>
     <string name="search_terms">Search Terms</string>
     <string name="search_assessments2">Search Assessments</string>
+    <string name="search_by_course_title">Search By Course Title</string>
+    <string name="search_by_assessment_title">Search By Assessment Title</string>
+    <string name="search_by_term_title">Search By Term Title</string>
     <string-array name="assessment_type">
         <item>Objective Assessment</item>
         <item>Performance Assessment</item>

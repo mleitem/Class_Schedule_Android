@@ -90,14 +90,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/searchAssessments"
+            android:id="@+id/searchTerms"
             android:layout_width="233dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="30dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-thin"
-            android:hint="@string/search_terms" />
+            android:hint="@string/search_by_term_title" />
 
         <Button
             android:id="@+id/button9"
@@ -105,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:onClick="searchTerms"
             android:text="@string/search" />
     </LinearLayout>
 
