@@ -50,6 +50,10 @@
     <string name="welcome_to_the_scheduling_app">Welcome to the Scheduling App!</string>
     <string name="enter">Enter</string>
     <string name="welcome_to_class_schedule_creator">Welcome to Class Schedule Creator!</string>
+    <string name="search_assessments">Search assessments</string>
+    <string name="search">Search</string>
+    <string name="search_terms">Search Terms</string>
+    <string name="search_assessments2">Search Assessments</string>
     <string-array name="assessment_type">
         <item>Objective Assessment</item>
         <item>Performance Assessment</item>

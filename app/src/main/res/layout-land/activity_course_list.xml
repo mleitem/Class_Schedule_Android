@@ -7,60 +7,43 @@
     android:background="@color/white"
     tools:context=".termscheduler.UI.CourseList">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/assessment_list"
-        android:onClick="enterAssessmentList"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="67dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="742dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginBottom="47dp"
-        android:clickable="true"
-        android:contentDescription="@string/add_button"
-        android:onClick="enterNewCourse"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_launcher_add2_foreground" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="84dp"
-        android:onClick="enterTermList"
-        android:text="@string/term_list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ScrollView
-        android:layout_width="742dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="729dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="44dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/textView7"
+            android:layout_width="441dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="30dp"
+            android:hint="Search Courses"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Search" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="728dp"
+        android:layout_height="181dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/courseRecyclerView"
@@ -75,5 +58,44 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="690dp"
+        android:layout_height="87dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="30dp"
+            android:onClick="enterTermList"
+            android:text="@string/term_list" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="enterAssessmentList"
+            android:text="@string/assessment_list" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="67dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="150dp"
+            android:clickable="true"
+            android:contentDescription="@string/add_button"
+            android:onClick="enterNewCourse"
+            app:srcCompat="@drawable/ic_launcher_add2_foreground" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
