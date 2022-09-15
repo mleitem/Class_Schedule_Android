@@ -10,15 +10,18 @@ import androidx.room.RoomDatabase;
 import com.example.meganleitem_c196pa.termscheduler.DAO.AssessmentDAO;
 import com.example.meganleitem_c196pa.termscheduler.DAO.CourseDAO;
 import com.example.meganleitem_c196pa.termscheduler.DAO.TermDAO;
+import com.example.meganleitem_c196pa.termscheduler.DAO.UserDAO;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
+import com.example.meganleitem_c196pa.termscheduler.Entity.User;
 
-@Database(entities={Term.class, Course.class, Assessment.class}, version=1, exportSchema = false)
+@Database(entities={Term.class, Course.class, Assessment.class, User.class}, version=2, exportSchema = false)
 public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
     public abstract CourseDAO courseDAO();
     public abstract AssessmentDAO assessmentDAO();
+    public abstract UserDAO userDAO();
 
     private static volatile DatabaseBuilder INSTANCE;
 

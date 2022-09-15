@@ -11,6 +11,7 @@ import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
+import com.example.meganleitem_c196pa.termscheduler.Entity.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, TermList.class);
         startActivity(intent);
         Repository repo = new Repository(getApplication());
+        User user1 = new User(1, "test", "test");
+        User user2 = new User(2, "admin", "admin");
+        repo.insert(user1);
+        repo.insert(user2);
         /*Term term = new Term(2, "Fall 2022", "10/1/2022", "12/1/2022");
         Course course = new Course(1, "Anatomy", "6/1/2022", "9/1/2022", "In Progress", "Name", "Email", "800-400-3000", 1);
         Assessment assessment = new Assessment(1, "Objective Assessment", "Anatomy Assessment", "08/10/2022", "08/11/2022", 1);
