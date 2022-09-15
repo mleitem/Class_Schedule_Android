@@ -97,7 +97,7 @@
                 android:text="Password: " />
 
             <EditText
-                android:id="@+id/textView8"
+                android:id="@+id/password"
                 android:layout_width="156dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="45dp"
