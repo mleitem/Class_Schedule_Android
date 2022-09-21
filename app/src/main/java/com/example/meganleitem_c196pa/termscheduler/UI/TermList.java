@@ -53,14 +53,14 @@ public class TermList extends AppCompatActivity {
     }
 
     public void searchTerms(View view) {
-        String title = searchTerms.getText().toString();
+        String title = searchTerms.getText().toString().toLowerCase();
         Repository repo = new Repository(getApplication());
         List<Term> filteredTerms = new ArrayList<>();
         List<Term> allTerms = repo.getAllTerms();
 
         for(int i = 0; i < allTerms.size(); i++) {
             Term term = allTerms.get(i);
-            String termTitle = term.getTermTitle();
+            String termTitle = term.getTermTitle().toLowerCase();
             if(termTitle.contains(title)){
                 filteredTerms.add(term);
             }

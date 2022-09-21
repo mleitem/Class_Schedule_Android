@@ -52,14 +52,14 @@ public class AssessmentList extends AppCompatActivity {
     }
 
     public void searchAssessments(View view) {
-        String title = searchAssessments.getText().toString();
+        String title = searchAssessments.getText().toString().toLowerCase();
         Repository repo = new Repository(getApplication());
         List<Assessment> filteredAssessments = new ArrayList<>();
         List<Assessment> allAssessments = repo.getAllAssessments();
 
         for(int i = 0; i < allAssessments.size(); i++) {
             Assessment assessment = allAssessments.get(i);
-            String assessmentTitle = assessment.getAssessmentTitle();
+            String assessmentTitle = assessment.getAssessmentTitle().toLowerCase();
             if(assessmentTitle.contains(title)){
                 filteredAssessments.add(assessment);
             }

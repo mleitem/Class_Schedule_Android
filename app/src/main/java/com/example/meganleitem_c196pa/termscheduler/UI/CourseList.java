@@ -53,14 +53,14 @@ public class CourseList extends AppCompatActivity {
     }
 
     public void searchCourses(View view){
-        String title = searchCourses.getText().toString();
+        String title = searchCourses.getText().toString().toLowerCase();
         Repository repo = new Repository(getApplication());
         List<Course> filteredCourses = new ArrayList<>();
         List<Course> allCourses = repo.getAllCourses();
 
         for(int i = 0; i < allCourses.size(); i++) {
             Course course = allCourses.get(i);
-            String courseTitle = course.getCourseTitle();
+            String courseTitle = course.getCourseTitle().toLowerCase();
             if(courseTitle.contains(title)){
                 filteredCourses.add(course);
             }

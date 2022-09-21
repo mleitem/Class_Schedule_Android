@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean login = false;
 
         for(int i = 0; i < allUsers.size(); i++) {
-            if (username.equals(allUsers.get(i).getUsername()) && password.equals(allUsers.get(i).getPassword())) {
+            if (username.toLowerCase().equals(allUsers.get(i).getUsername().toLowerCase()) && password.equals(allUsers.get(i).getPassword())) {
                 login = true;
             }
         }
