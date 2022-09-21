@@ -24,6 +24,11 @@
             android:label="View Assessment"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".termscheduler.UI.Dashboard"
+            android:exported="true"
+            android:label="Dashboard"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".termscheduler.UI.ViewCourse"
             android:exported="true"
             android:label="View Course"

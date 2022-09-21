@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         password = userPassword.getText().toString();
 
         if(loginCheck(username, password) == true){
-            Intent intent = new Intent(MainActivity.this, TermList.class);
+            Intent intent = new Intent(MainActivity.this, Dashboard.class);
             startActivity(intent);
         }
         else{
