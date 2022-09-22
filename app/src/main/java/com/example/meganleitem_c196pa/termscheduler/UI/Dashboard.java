@@ -7,8 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meganleitem_c196pa.R;
-import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
-import com.example.meganleitem_c196pa.termscheduler.Entity.User;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -30,6 +28,11 @@ public class Dashboard extends AppCompatActivity {
 
     public void enterCourseList(View view){
         Intent intent = new Intent(Dashboard.this, CourseList.class);
+        startActivity(intent);
+    }
+
+    public void enterTermReports(View view){
+        Intent intent = new Intent(Dashboard.this, TermReports.class);
         startActivity(intent);
     }
 }

@@ -59,6 +59,11 @@
     <string name="search_by_term_title">Search By Term Title</string>
     <string name="dashboard">Dashboard</string>
     <string name="reports">Reports</string>
+    <string name="term_reports">Term Reports</string>
+    <string name="course_reports">Course Reports</string>
+    <string name="assessment_reports">Assessment Reports</string>
+    <string name="view_terms_by_date_range">View Terms By Date Range</string>
+    <string name="submit">Submit</string>
     <string-array name="assessment_type">
         <item>Objective Assessment</item>
         <item>Performance Assessment</item>
