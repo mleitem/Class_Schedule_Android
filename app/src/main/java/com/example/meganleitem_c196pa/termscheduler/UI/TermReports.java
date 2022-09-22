@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -140,35 +141,62 @@ public class TermReports extends AppCompatActivity {
     public void submit(View view) throws ParseException {
         String startDate = editStart.getText().toString();
         String endDate = editEnd.getText().toString();
-        LocalDate userStart = LocalDate.from(dtf.parse(startDate));
-        LocalDate userEnd = LocalDate.from(dtf.parse(endDate));
         List<Term> allTerms = repo.getAllTerms();
         List<Term> filteredTerms = new ArrayList<>();
 
-        for(int i = 0; i < allTerms.size(); i++) {
-            Term term = allTerms.get(i);
-            String termStartString = term.getStartDate();
-            String termEndString = term.getEndDate();
-            LocalDate termStart = LocalDate.from(dtf.parse(termStartString));
-            LocalDate termEnd = LocalDate.from(dtf.parse(termEndString));
-            termStart = termStart.plusDays(1);
-            termEnd = termEnd.minusDays(1);
 
-            String title = term.getTermTitle();
+        if(startDate.isEmpty() || endDate.isEmpty()){
+            Toast.makeText(TermReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
+            RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
+            final TermReportsAdapter adapter = new TermReportsAdapter(this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter.setTerms(allTerms);
+        }
+        else {
+            LocalDate userStart = LocalDate.from(dtf.parse(startDate));
+            LocalDate userEnd = LocalDate.from(dtf.parse(endDate));
 
-
-            if (((userStart.isBefore(termStart)) && (userEnd.isAfter(termEnd)))
-            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))
-            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termEnd)))
-            || ((userStart.isBefore(termStart)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))) {
-                System.out.println(title + " " + termStart);
-                filteredTerms.add(term);
+            if (userStart.isAfter(userEnd)) {
+                Toast.makeText(TermReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
+                final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter.setTerms(allTerms);
             }
-            else{
-                System.out.println("no match");
+            else {
+                for (int i = 0; i < allTerms.size(); i++) {
+                    Term term = allTerms.get(i);
+                    String termStartString = term.getStartDate();
+                    String termEndString = term.getEndDate();
+                    LocalDate termStart = LocalDate.from(dtf.parse(termStartString));
+                    LocalDate termEnd = LocalDate.from(dtf.parse(termEndString));
+                    termStart = termStart.minusDays(1);
+                    termEnd = termEnd.plusDays(1);
+
+                    if (((userStart.isBefore(termStart)) && (userEnd.isAfter(termEnd)))
+                            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))
+                            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termEnd)))
+                            || ((userStart.isBefore(termStart)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))) {
+                        filteredTerms.add(term);
+                    }
+                }
+                if (filteredTerms.size() > 0) {
+                    RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
+                    final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    adapter.setTerms(filteredTerms);
+                } else {
+                    Toast.makeText(TermReports.this, "Sorry, there are no terms within your date range.", Toast.LENGTH_LONG).show();
+                    RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
+                    final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    adapter.setTerms(allTerms);
+                }
             }
         }
     }
-
-
 }
