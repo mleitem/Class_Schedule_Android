@@ -20,11 +20,13 @@
         <entry key="app/src/main/res/layout-land/activity_view_term.xml" value="0.2588183421516755" />
         <entry key="app/src/main/res/layout/activity_assessment_list.xml" value="0.3829787234042553" />
         <entry key="app/src/main/res/layout/activity_course_list.xml" value="0.3829787234042553" />
+        <entry key="app/src/main/res/layout/activity_course_reports.xml" value="0.2791666666666667" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_new_term.xml" value="0.17300724637681159" />
         <entry key="app/src/main/res/layout/activity_reports.xml" value="0.26979166666666665" />
         <entry key="app/src/main/res/layout/activity_term_list.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_term_reports.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/activity_view_assessment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_view_course.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_view_term.xml" value="0.335" />

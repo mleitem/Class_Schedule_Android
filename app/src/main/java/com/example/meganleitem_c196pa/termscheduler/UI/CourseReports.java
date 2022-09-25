@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meganleitem_c196pa.R;
 import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
 import java.text.ParseException;
@@ -27,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class TermReports extends AppCompatActivity {
+public class CourseReports extends AppCompatActivity {
 
     String myFormat = "MM/dd/yyyy";
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -39,20 +42,40 @@ public class TermReports extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener endDate;
     final Calendar myCalendarEnd = Calendar.getInstance();
     Repository repo = new Repository(getApplication());
+    Spinner courseStatus;
+    Spinner courseInstructor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_reports);
+        setContentView(R.layout.activity_course_reports);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
-        List<Term> terms = repo.getAllTerms();
-        final TermReportsAdapter adapter = new TermReportsAdapter(this);
+        RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+        List<Course> courses = repo.getAllCourses();
+        final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setTerms(terms);
-        editStart = findViewById(R.id.startDateTerm);
+        adapter.setCourses(courses);
+        courseStatus = (Spinner) findViewById(R.id.statusSpinner);
+        ArrayAdapter<CharSequence> courseReportsAdapter = ArrayAdapter.createFromResource(this,R.array.course_status,android.R.layout.simple_spinner_item);
+        courseReportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        courseStatus.setAdapter(courseReportsAdapter);
+        courseInstructor = (Spinner) findViewById(R.id.instructorSpinner);
+        ArrayList<String> instructorList = new ArrayList<>();
+        for(Course c: repo.getAllCourses()) {
+            String name = c.getInstructorName();
+            if(instructorList.contains(name)){
+
+            }
+            else {
+                instructorList.add(name);
+            }
+        }
+        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, instructorList);
+        courseArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        courseInstructor.setAdapter(courseArrayAdapter);
+        editStart = findViewById(R.id.startDateCourse);
         editStart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -70,16 +93,15 @@ public class TermReports extends AppCompatActivity {
                     }
                 }
 
-                new DatePickerDialog(TermReports.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                new DatePickerDialog(CourseReports.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
                         myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        editEnd = findViewById(R.id.endDateTerm);
+        editEnd = findViewById(R.id.endDateCourse);
         editEnd.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                Date date;
                 Date today = Calendar.getInstance().getTime();
                 String infoEnd = editEnd.getText().toString();
                 if(infoEnd.equals("")) {
@@ -93,7 +115,7 @@ public class TermReports extends AppCompatActivity {
                     }
                 }
 
-                new DatePickerDialog(TermReports.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                new DatePickerDialog(CourseReports.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
                         myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -138,20 +160,20 @@ public class TermReports extends AppCompatActivity {
         editEnd.setText(sdf.format(myCalendarEnd.getTime()));
     }
 
-    public void submit(View view) throws ParseException {
+    public void submitCourseSearch(View view) throws ParseException {
         String startDate = editStart.getText().toString();
         String endDate = editEnd.getText().toString();
-        List<Term> allTerms = repo.getAllTerms();
-        List<Term> filteredTerms = new ArrayList<>();
+        List<Course> allCourses = repo.getAllCourses();
+        List<Course> filteredCourses = new ArrayList<>();
 
 
         if(startDate.isEmpty() || endDate.isEmpty()){
-            Toast.makeText(TermReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
-            RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
-            final TermReportsAdapter adapter = new TermReportsAdapter(this);
+            Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
+            RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+            final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter.setTerms(allTerms);
+            adapter.setCourses(allCourses);
         }
         else {
             LocalDate userStart = LocalDate.from(dtf.parse(startDate));
@@ -160,49 +182,50 @@ public class TermReports extends AppCompatActivity {
             //userEnd = userEnd.plusDays(1);
 
             if (userStart.isAfter(userEnd)) {
-                Toast.makeText(TermReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
-                RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
-                final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setTerms(allTerms);
+                adapter.setCourses(allCourses);
             }
             else {
-                for (int i = 0; i < allTerms.size(); i++) {
-                    Term term = allTerms.get(i);
-                    String termStartString = term.getStartDate();
-                    String termEndString = term.getEndDate();
-                    LocalDate termStart = LocalDate.from(dtf.parse(termStartString));
-                    LocalDate termEnd = LocalDate.from(dtf.parse(termEndString));
-                    //termStart = termStart.minusDays(1);
-                    //termEnd = termEnd.plusDays(1);
+                for (int i = 0; i < allCourses.size(); i++) {
+                    Course course = allCourses.get(i);
+                    String courseStartString = course.getStartDate();
+                    String courseEndString = course.getEndDate();
+                    LocalDate courseStart = LocalDate.from(dtf.parse(courseStartString));
+                    LocalDate courseEnd = LocalDate.from(dtf.parse(courseEndString));
+                    //courseStart = courseStart.minusDays(1);
+                    //courseEnd = courseEnd.plusDays(1);
 
-                    /*if (((userStart.isBefore(termStart)) && (userEnd.isAfter(termEnd)))
-                            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))
-                            || ((userStart.isAfter(termStart) && userStart.isBefore(termEnd)) && (userEnd.isAfter(termEnd)))
-                            || ((userStart.isBefore(termStart)) && (userEnd.isAfter(termStart) && userEnd.isBefore(termEnd)))) {
-                        filteredTerms.add(term);
+                    /*if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
+                            || ((userStart.isEqual(courseStart) ))
+                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))
+                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseEnd)))
+                            || ((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))) {
+                        filteredCourses.add(course);
                     }*/
-                    if(userEnd.isBefore(termStart) || userStart.isAfter(termEnd)){
+                    if(userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)){
 
                     }
                     else {
-                        filteredTerms.add(term);
+                        filteredCourses.add(course);
                     }
                 }
-                if (filteredTerms.size() > 0) {
-                    RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
-                    final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                if (filteredCourses.size() > 0) {
+                    RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                    final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    adapter.setTerms(filteredTerms);
+                    adapter.setCourses(filteredCourses);
                 } else {
-                    Toast.makeText(TermReports.this, "Sorry, there are no terms within your date range.", Toast.LENGTH_LONG).show();
-                    RecyclerView recyclerView = findViewById(R.id.termReportsRecyclerView);
-                    final TermReportsAdapter adapter = new TermReportsAdapter(this);
+                    Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
+                    RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                    final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    adapter.setTerms(allTerms);
+                    adapter.setCourses(allCourses);
                 }
             }
         }
