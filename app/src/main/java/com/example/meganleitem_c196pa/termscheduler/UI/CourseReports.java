@@ -163,16 +163,6 @@ public class CourseReports extends AppCompatActivity {
         List<Course> filteredCourses = new ArrayList<>();
         LocalDate userStart = LocalDate.from(dtf.parse(start));
         LocalDate userEnd = LocalDate.from(dtf.parse(end));
-        //userStart = userStart.minusDays(1);
-        //userEnd = userEnd.plusDays(1);
-        /*if ((start.isEmpty() && !end.isEmpty()) || (!start.isEmpty() && end.isEmpty())) {
-            Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
-            RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-            final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter.setCourses(allCourses);
-        } else {*/
 
             if (userStart.isAfter(userEnd)) {
                 Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
@@ -188,16 +178,7 @@ public class CourseReports extends AppCompatActivity {
                     String courseEndString = course.getEndDate();
                     LocalDate courseStart = LocalDate.from(dtf.parse(courseStartString));
                     LocalDate courseEnd = LocalDate.from(dtf.parse(courseEndString));
-                    //courseStart = courseStart.minusDays(1);
-                    //courseEnd = courseEnd.plusDays(1);
 
-                    /*if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
-                            || ((userStart.isEqual(courseStart) ))
-                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))
-                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseEnd)))
-                            || ((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))) {
-                        filteredCourses.add(course);
-                    }*/
                     if (userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)) {
 
                     } else {
@@ -205,7 +186,7 @@ public class CourseReports extends AppCompatActivity {
                     }
                 }
             }
-        //}
+
         return filteredCourses;
     }
 
