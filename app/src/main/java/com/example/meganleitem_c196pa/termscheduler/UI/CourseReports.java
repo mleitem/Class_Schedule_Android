@@ -44,6 +44,7 @@ public class CourseReports extends AppCompatActivity {
     Repository repo = new Repository(getApplication());
     Spinner courseStatus;
     Spinner courseInstructor;
+    List<Course> allCourses = repo.getAllCourses();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +59,17 @@ public class CourseReports extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCourses(courses);
         courseStatus = (Spinner) findViewById(R.id.statusSpinner);
-        ArrayAdapter<CharSequence> courseReportsAdapter = ArrayAdapter.createFromResource(this,R.array.course_status,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> courseReportsAdapter = ArrayAdapter.createFromResource(this, R.array.course_status_reports, android.R.layout.simple_spinner_item);
         courseReportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         courseStatus.setAdapter(courseReportsAdapter);
         courseInstructor = (Spinner) findViewById(R.id.instructorSpinner);
         ArrayList<String> instructorList = new ArrayList<>();
-        for(Course c: repo.getAllCourses()) {
+        instructorList.add("All");
+        for (Course c : repo.getAllCourses()) {
             String name = c.getInstructorName();
-            if(instructorList.contains(name)){
+            if (instructorList.contains(name)) {
 
-            }
-            else {
+            } else {
                 instructorList.add(name);
             }
         }
@@ -76,16 +77,15 @@ public class CourseReports extends AppCompatActivity {
         courseArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         courseInstructor.setAdapter(courseArrayAdapter);
         editStart = findViewById(R.id.startDateCourse);
-        editStart.setOnClickListener(new View.OnClickListener(){
+        editStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Date date;
                 Date today = Calendar.getInstance().getTime();
                 String infoStart = editStart.getText().toString();
-                if(infoStart.equals("")) {
+                if (infoStart.equals("")) {
                     myCalendarStart.setTime(today);
-                }
-                else {
+                } else {
                     try {
                         myCalendarStart.setTime(sdf.parse(infoStart));
                     } catch (ParseException e) {
@@ -98,16 +98,15 @@ public class CourseReports extends AppCompatActivity {
             }
         });
         editEnd = findViewById(R.id.endDateCourse);
-        editEnd.setOnClickListener(new View.OnClickListener(){
+        editEnd.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Date today = Calendar.getInstance().getTime();
                 String infoEnd = editEnd.getText().toString();
-                if(infoEnd.equals("")) {
+                if (infoEnd.equals("")) {
                     myCalendarEnd.setTime(today);
-                }
-                else {
+                } else {
                     try {
                         myCalendarEnd.setTime(sdf.parse(infoEnd));
                     } catch (ParseException e) {
@@ -144,7 +143,7 @@ public class CourseReports extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
@@ -152,22 +151,72 @@ public class CourseReports extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateStart(){
+    public void updateStart() {
         editStart.setText(sdf.format(myCalendarStart.getTime()));
     }
 
-    public void updateEnd(){
+    public void updateEnd() {
         editEnd.setText(sdf.format(myCalendarEnd.getTime()));
+    }
+
+    public List<Course> filterDates(String start, String end, List<Course> courses) {
+        List<Course> filteredCourses = new ArrayList<>();
+        LocalDate userStart = LocalDate.from(dtf.parse(start));
+        LocalDate userEnd = LocalDate.from(dtf.parse(end));
+        //userStart = userStart.minusDays(1);
+        //userEnd = userEnd.plusDays(1);
+        if ((start.isEmpty() && !end.isEmpty()) || (!start.isEmpty() && end.isEmpty())) {
+            Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
+            RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+            final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter.setCourses(allCourses);
+        } else {
+
+            if (userStart.isAfter(userEnd)) {
+                Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter.setCourses(allCourses);
+            } else {
+                for (int i = 0; i < courses.size(); i++) {
+                    Course course = courses.get(i);
+                    String courseStartString = course.getStartDate();
+                    String courseEndString = course.getEndDate();
+                    LocalDate courseStart = LocalDate.from(dtf.parse(courseStartString));
+                    LocalDate courseEnd = LocalDate.from(dtf.parse(courseEndString));
+                    //courseStart = courseStart.minusDays(1);
+                    //courseEnd = courseEnd.plusDays(1);
+
+                    /*if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
+                            || ((userStart.isEqual(courseStart) ))
+                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))
+                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseEnd)))
+                            || ((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))) {
+                        filteredCourses.add(course);
+                    }*/
+                    if (userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)) {
+
+                    } else {
+                        filteredCourses.add(course);
+                    }
+                }
+            }
+        }
+        return filteredCourses;
     }
 
     public void submitCourseSearch(View view) throws ParseException {
         String startDate = editStart.getText().toString();
         String endDate = editEnd.getText().toString();
-        List<Course> allCourses = repo.getAllCourses();
-        List<Course> filteredCourses = new ArrayList<>();
 
+        String status = courseStatus.getSelectedItem().toString();
+        List<Course> searchedCourses = filterDates(startDate, endDate, allCourses);
 
-        if(startDate.isEmpty() || endDate.isEmpty()){
+        /*if((startDate.isEmpty() && !endDate.isEmpty()) || (!startDate.isEmpty() && endDate.isEmpty())){
             Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
             RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
             final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
@@ -199,26 +248,27 @@ public class CourseReports extends AppCompatActivity {
                     //courseStart = courseStart.minusDays(1);
                     //courseEnd = courseEnd.plusDays(1);
 
-                    /*if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
+                    if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
                             || ((userStart.isEqual(courseStart) ))
                             || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))
                             || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseEnd)))
                             || ((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))) {
                         filteredCourses.add(course);
-                    }*/
-                    if(userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)){
+                    }
+        if (userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)) {
 
-                    }
-                    else {
-                        filteredCourses.add(course);
-                    }
-                }
-                if (filteredCourses.size() > 0) {
+        } else {
+            filteredCourses.add(course);
+        }
+    }*/
+
+
+                if (searchedCourses.size() > 0) {
                     RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
                     final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    adapter.setCourses(filteredCourses);
+                    adapter.setCourses(searchedCourses);
                 } else {
                     Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
                     RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
@@ -229,5 +279,5 @@ public class CourseReports extends AppCompatActivity {
                 }
             }
         }
-    }
-}
+
+

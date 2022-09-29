@@ -74,4 +74,11 @@
         <item>Dropped</item>
         <item>Plan to Take</item>
     </string-array>
+    <string-array name="course_status_reports">
+        <item>All</item>
+        <item>In Progress</item>
+        <item>Completed</item>
+        <item>Dropped</item>
+        <item>Plan to Take</item>
+    </string-array>
 </resources>
