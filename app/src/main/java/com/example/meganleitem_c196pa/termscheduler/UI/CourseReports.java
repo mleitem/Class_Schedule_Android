@@ -165,14 +165,14 @@ public class CourseReports extends AppCompatActivity {
         LocalDate userEnd = LocalDate.from(dtf.parse(end));
         //userStart = userStart.minusDays(1);
         //userEnd = userEnd.plusDays(1);
-        if ((start.isEmpty() && !end.isEmpty()) || (!start.isEmpty() && end.isEmpty())) {
+        /*if ((start.isEmpty() && !end.isEmpty()) || (!start.isEmpty() && end.isEmpty())) {
             Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
             RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
             final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter.setCourses(allCourses);
-        } else {
+        } else {*/
 
             if (userStart.isAfter(userEnd)) {
                 Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
@@ -205,79 +205,99 @@ public class CourseReports extends AppCompatActivity {
                     }
                 }
             }
+        //}
+        return filteredCourses;
+    }
+
+    public List<Course> filterStatus(String status, List<Course> courses){
+        List<Course> filteredCourses = new ArrayList<>();
+        if(status.equals("All")){
+            filteredCourses = courses;
+        }
+        else {
+            for(int i = 0; i < courses.size(); i++){
+                String courseStatus = courses.get(i).getStatus();
+                if(courseStatus.equals(status)){
+                    filteredCourses.add(courses.get(i));
+                }
+            }
+        }
+        return filteredCourses;
+    }
+
+    public List<Course> filterInstructor(String instructor, List<Course> courses){
+        List<Course> filteredCourses = new ArrayList<>();
+        if(instructor.equals("All")){
+            filteredCourses = courses;
+        }
+        else {
+            for(int i = 0; i < courses.size(); i++){
+                String courseInstructor = courses.get(i).getInstructorName();
+                if(courseInstructor.equals(instructor)){
+                    filteredCourses.add(courses.get(i));
+                }
+            }
         }
         return filteredCourses;
     }
 
     public void submitCourseSearch(View view) throws ParseException {
+        List<Course> searchedCourses = new ArrayList<>();
+        List<Course> finalList = new ArrayList<>();
         String startDate = editStart.getText().toString();
         String endDate = editEnd.getText().toString();
-
         String status = courseStatus.getSelectedItem().toString();
-        List<Course> searchedCourses = filterDates(startDate, endDate, allCourses);
+        String instructor = courseInstructor.getSelectedItem().toString();
 
-        /*if((startDate.isEmpty() && !endDate.isEmpty()) || (!startDate.isEmpty() && endDate.isEmpty())){
-            Toast.makeText(CourseReports.this, "Please add a start and/or end date.", Toast.LENGTH_LONG).show();
+        if ((startDate.isEmpty() && !endDate.isEmpty()) || (!startDate.isEmpty() && endDate.isEmpty())) {
+            Toast.makeText(CourseReports.this, "Please add a start or end date.", Toast.LENGTH_LONG).show();
             RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
             final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter.setCourses(allCourses);
         }
-        else {
-            LocalDate userStart = LocalDate.from(dtf.parse(startDate));
-            LocalDate userEnd = LocalDate.from(dtf.parse(endDate));
-            //userStart = userStart.minusDays(1);
-            //userEnd = userEnd.plusDays(1);
 
-            if (userStart.isAfter(userEnd)) {
-                Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
+        else if (startDate.isEmpty() && endDate.isEmpty()){
+            finalList = filterStatus(status, allCourses);
+            finalList = filterInstructor(instructor, finalList);
+            if (finalList.size() > 0) {
+                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter.setCourses(finalList);
+            } else {
+                Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
                 RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
                 final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 adapter.setCourses(allCourses);
             }
-            else {
-                for (int i = 0; i < allCourses.size(); i++) {
-                    Course course = allCourses.get(i);
-                    String courseStartString = course.getStartDate();
-                    String courseEndString = course.getEndDate();
-                    LocalDate courseStart = LocalDate.from(dtf.parse(courseStartString));
-                    LocalDate courseEnd = LocalDate.from(dtf.parse(courseEndString));
-                    //courseStart = courseStart.minusDays(1);
-                    //courseEnd = courseEnd.plusDays(1);
-
-                    if (((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseEnd)))
-                            || ((userStart.isEqual(courseStart) ))
-                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))
-                            || ((userStart.isAfter(courseStart) && userStart.isBefore(courseEnd)) && (userEnd.isAfter(courseEnd)))
-                            || ((userStart.isBefore(courseStart)) && (userEnd.isAfter(courseStart) && userEnd.isBefore(courseEnd)))) {
-                        filteredCourses.add(course);
-                    }
-        if (userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)) {
-
-        } else {
-            filteredCourses.add(course);
         }
-    }*/
 
+        else {
+            finalList = filterDates(startDate, endDate, allCourses);
+            finalList = filterStatus(status, finalList);
+            finalList = filterInstructor(instructor, finalList);
 
-                if (searchedCourses.size() > 0) {
-                    RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                    final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    adapter.setCourses(searchedCourses);
-                } else {
-                    Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
-                    RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                    final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    adapter.setCourses(allCourses);
-                }
+            if (finalList.size() > 0) {
+                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter.setCourses(finalList);
+            } else {
+                Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
+                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                adapter.setCourses(allCourses);
             }
         }
+    }
+}
 
 
