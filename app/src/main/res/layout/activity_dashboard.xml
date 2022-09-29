@@ -64,6 +64,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="37dp"
+        android:onClick = "enterAssessmentReports"
         android:text="@string/assessment_reports"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

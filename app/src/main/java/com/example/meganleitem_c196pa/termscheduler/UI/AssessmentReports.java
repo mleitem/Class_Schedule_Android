@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meganleitem_c196pa.R;
 import com.example.meganleitem_c196pa.termscheduler.Database.Repository;
+import com.example.meganleitem_c196pa.termscheduler.Entity.Assessment;
 import com.example.meganleitem_c196pa.termscheduler.Entity.Course;
-import com.example.meganleitem_c196pa.termscheduler.Entity.Term;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class CourseReports extends AppCompatActivity {
+public class AssessmentReports extends AppCompatActivity {
 
     String myFormat = "MM/dd/yyyy";
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -42,27 +42,26 @@ public class CourseReports extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener endDate;
     final Calendar myCalendarEnd = Calendar.getInstance();
     Repository repo = new Repository(getApplication());
-    Spinner courseStatus;
-    Spinner courseInstructor;
-    List<Course> allCourses = repo.getAllCourses();
+    Spinner assessmentType;
+    List<Assessment> allAssessments = repo.getAllAssessments();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_reports);
+        setContentView(R.layout.activity_assessment_reports);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-        List<Course> courses = repo.getAllCourses();
-        final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+        RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+        List<Assessment> assessments = repo.getAllAssessments();
+        final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setCourses(courses);
-        courseStatus = (Spinner) findViewById(R.id.statusSpinner);
-        ArrayAdapter<CharSequence> courseReportsAdapter = ArrayAdapter.createFromResource(this, R.array.course_status_reports, android.R.layout.simple_spinner_item);
-        courseReportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        courseStatus.setAdapter(courseReportsAdapter);
-        courseInstructor = (Spinner) findViewById(R.id.instructorSpinner);
+        adapter.setAssessments(assessments);
+        assessmentType = (Spinner) findViewById(R.id.typeSpinner);
+        ArrayAdapter<CharSequence> assessmentReportsAdapter = ArrayAdapter.createFromResource(this, R.array.assessment_type_reports, android.R.layout.simple_spinner_item);
+        assessmentReportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        assessmentType.setAdapter(assessmentReportsAdapter);
+        /*courseInstructor = (Spinner) findViewById(R.id.instructorSpinner);
         ArrayList<String> instructorList = new ArrayList<>();
         instructorList.add("All");
         for (Course c : repo.getAllCourses()) {
@@ -75,8 +74,8 @@ public class CourseReports extends AppCompatActivity {
         }
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, instructorList);
         courseArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        courseInstructor.setAdapter(courseArrayAdapter);
-        editStart = findViewById(R.id.startDateCourse);
+        courseInstructor.setAdapter(courseArrayAdapter);*/
+        editStart = findViewById(R.id.startDateAssessment);
         editStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,11 +92,11 @@ public class CourseReports extends AppCompatActivity {
                     }
                 }
 
-                new DatePickerDialog(CourseReports.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                new DatePickerDialog(AssessmentReports.this, startDate, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
                         myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        editEnd = findViewById(R.id.endDateCourse);
+        editEnd = findViewById(R.id.endDateAssessment);
         editEnd.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -114,7 +113,7 @@ public class CourseReports extends AppCompatActivity {
                     }
                 }
 
-                new DatePickerDialog(CourseReports.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                new DatePickerDialog(AssessmentReports.this, endDate, myCalendarEnd.get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
                         myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -159,122 +158,103 @@ public class CourseReports extends AppCompatActivity {
         editEnd.setText(sdf.format(myCalendarEnd.getTime()));
     }
 
-    public List<Course> filterDates(String start, String end, List<Course> courses) {
-        List<Course> filteredCourses = new ArrayList<>();
+    public List<Assessment> filterDates(String start, String end, List<Assessment> assessments) {
+        List<Assessment> filteredAssessments = new ArrayList<>();
         LocalDate userStart = LocalDate.from(dtf.parse(start));
         LocalDate userEnd = LocalDate.from(dtf.parse(end));
 
             if (userStart.isAfter(userEnd)) {
-                Toast.makeText(CourseReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
-                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                Toast.makeText(AssessmentReports.this, "Please adjust your date range to the start date being after the end date.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+                final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setCourses(allCourses);
+                adapter.setAssessments(allAssessments);
             } else {
-                for (int i = 0; i < courses.size(); i++) {
-                    Course course = courses.get(i);
-                    String courseStartString = course.getStartDate();
-                    String courseEndString = course.getEndDate();
-                    LocalDate courseStart = LocalDate.from(dtf.parse(courseStartString));
-                    LocalDate courseEnd = LocalDate.from(dtf.parse(courseEndString));
+                for (int i = 0; i < assessments.size(); i++) {
+                    Assessment assessment = assessments.get(i);
+                    String assessmentStartString = assessment.getStartDate();
+                    String assessmentEndString = assessment.getEndDate();
+                    LocalDate assessmentStart = LocalDate.from(dtf.parse(assessmentStartString));
+                    LocalDate assessmentEnd = LocalDate.from(dtf.parse(assessmentEndString));
 
-                    if (userEnd.isBefore(courseStart) || userStart.isAfter(courseEnd)) {
+                    if (userEnd.isBefore(assessmentStart) || userStart.isAfter(assessmentEnd)) {
 
                     } else {
-                        filteredCourses.add(course);
+                        filteredAssessments.add(assessment);
                     }
                 }
             }
 
-        return filteredCourses;
+        return filteredAssessments;
     }
 
-    public List<Course> filterStatus(String status, List<Course> courses){
-        List<Course> filteredCourses = new ArrayList<>();
-        if(status.equals("All")){
-            filteredCourses = courses;
+    public List<Assessment> filterType(String type, List<Assessment> assessments){
+        List<Assessment> filteredAssessments = new ArrayList<>();
+        if(type.equals("All")){
+            filteredAssessments = assessments;
         }
         else {
-            for(int i = 0; i < courses.size(); i++){
-                String courseStatus = courses.get(i).getStatus();
-                if(courseStatus.equals(status)){
-                    filteredCourses.add(courses.get(i));
+            for(int i = 0; i < assessments.size(); i++){
+                String assessmentType = assessments.get(i).getType();
+                if(assessmentType.equals(type)){
+                    filteredAssessments.add(assessments.get(i));
                 }
             }
         }
-        return filteredCourses;
+        return filteredAssessments;
     }
 
-    public List<Course> filterInstructor(String instructor, List<Course> courses){
-        List<Course> filteredCourses = new ArrayList<>();
-        if(instructor.equals("All")){
-            filteredCourses = courses;
-        }
-        else {
-            for(int i = 0; i < courses.size(); i++){
-                String courseInstructor = courses.get(i).getInstructorName();
-                if(courseInstructor.equals(instructor)){
-                    filteredCourses.add(courses.get(i));
-                }
-            }
-        }
-        return filteredCourses;
-    }
-
-    public void submitCourseSearch(View view) throws ParseException {
-        List<Course> finalList = new ArrayList<>();
+    public void submitAssessmentSearch(View view) throws ParseException {
+        List<Assessment> finalList = new ArrayList<>();
         String startDate = editStart.getText().toString();
         String endDate = editEnd.getText().toString();
-        String status = courseStatus.getSelectedItem().toString();
-        String instructor = courseInstructor.getSelectedItem().toString();
+        String type = assessmentType.getSelectedItem().toString();
 
         if ((startDate.isEmpty() && !endDate.isEmpty()) || (!startDate.isEmpty() && endDate.isEmpty())) {
-            Toast.makeText(CourseReports.this, "Please add a start or end date.", Toast.LENGTH_LONG).show();
-            RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-            final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+            Toast.makeText(AssessmentReports.this, "Please add a start or end date.", Toast.LENGTH_LONG).show();
+            RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+            final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter.setCourses(allCourses);
+            adapter.setAssessments(allAssessments);
         }
 
         else if (startDate.isEmpty() && endDate.isEmpty()){
-            finalList = filterStatus(status, allCourses);
-            finalList = filterInstructor(instructor, finalList);
+            finalList = filterType(type, allAssessments);
             if (finalList.size() > 0) {
-                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+                final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setCourses(finalList);
+                adapter.setAssessments(finalList);
             } else {
-                Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
-                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                Toast.makeText(AssessmentReports.this, "Sorry, there are no assessments matching your search.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+                final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setCourses(allCourses);
+                adapter.setAssessments(allAssessments);
             }
         }
 
         else {
-            finalList = filterDates(startDate, endDate, allCourses);
-            finalList = filterStatus(status, finalList);
-            finalList = filterInstructor(instructor, finalList);
+            finalList = filterDates(startDate, endDate, allAssessments);
+            finalList = filterType(type, finalList);
 
             if (finalList.size() > 0) {
-                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+                final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setCourses(finalList);
+                adapter.setAssessments(finalList);
             } else {
-                Toast.makeText(CourseReports.this, "Sorry, there are no courses matching your search.", Toast.LENGTH_LONG).show();
-                RecyclerView recyclerView = findViewById(R.id.courseReportsRecyclerView);
-                final CourseReportsAdapter adapter = new CourseReportsAdapter(this);
+                Toast.makeText(AssessmentReports.this, "Sorry, there are no assessments matching your search.", Toast.LENGTH_LONG).show();
+                RecyclerView recyclerView = findViewById(R.id.assessmentReportsRecyclerView);
+                final AssessmentReportsAdapter adapter = new AssessmentReportsAdapter(this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.setCourses(allCourses);
+                adapter.setAssessments(allAssessments);
             }
         }
     }

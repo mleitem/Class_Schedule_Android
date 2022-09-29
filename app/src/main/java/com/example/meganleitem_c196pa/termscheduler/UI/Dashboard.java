@@ -40,4 +40,9 @@ public class Dashboard extends AppCompatActivity {
         Intent intent = new Intent(Dashboard.this, CourseReports.class);
         startActivity(intent);
     }
+
+    public void enterAssessmentReports(View view){
+        Intent intent = new Intent(Dashboard.this, AssessmentReports.class);
+        startActivity(intent);
+    }
 }

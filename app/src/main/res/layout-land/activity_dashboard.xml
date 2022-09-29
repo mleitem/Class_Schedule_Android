@@ -71,6 +71,7 @@
                 android:id="@+id/button15"
                 android:layout_width="338dp"
                 android:layout_height="73dp"
+                android:onClick="enterAssessmentReports"
                 android:text="@string/assessment_reports" />
         </LinearLayout>
     </LinearLayout>
