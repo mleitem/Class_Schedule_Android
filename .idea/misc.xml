@@ -11,10 +11,13 @@
         <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_circle_foreground.xml" value="0.309" />
         <entry key="app/src/main/res/drawable/ic_launcher_grad_cap_foreground.xml" value="0.309" />
         <entry key="app/src/main/res/layout-land/activity_assessment_list.xml" value="0.2588183421516755" />
+        <entry key="app/src/main/res/layout-land/activity_assessment_reports.xml" value="0.21428571428571427" />
         <entry key="app/src/main/res/layout-land/activity_course_list.xml" value="0.2588183421516755" />
+        <entry key="app/src/main/res/layout-land/activity_course_reports.xml" value="0.21428571428571427" />
         <entry key="app/src/main/res/layout-land/activity_dashboard.xml" value="0.2292768959435626" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.11206896551724138" />
         <entry key="app/src/main/res/layout-land/activity_term_list.xml" value="0.2588183421516755" />
+        <entry key="app/src/main/res/layout-land/activity_term_reports.xml" value="0.1710758377425044" />
         <entry key="app/src/main/res/layout-land/activity_view_assessment.xml" value="0.2588183421516755" />
         <entry key="app/src/main/res/layout-land/activity_view_course.xml" value="0.2588183421516755" />
         <entry key="app/src/main/res/layout-land/activity_view_term.xml" value="0.2588183421516755" />
