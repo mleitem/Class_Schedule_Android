@@ -9,26 +9,26 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="84dp"
-        android:onClick="enterCourseList"
-        android:text="@string/course_list"
+        android:onClick="enterTermReports"
+        android:text="@string/term_reports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="24dp"
-        android:onClick="enterAssessmentList"
-        android:text="@string/assessment_list"
+        android:onClick="enterDashboard"
+        android:text="@string/dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -55,7 +55,7 @@
     <ScrollView
         android:id="@+id/scrollView4"
         android:layout_width="406dp"
-        android:layout_height="528dp"
+        android:layout_height="476dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"

@@ -39,8 +39,10 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView6"
         android:layout_width="728dp"
-        android:layout_height="223dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -59,32 +61,35 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="690dp"
         android:layout_height="87dp"
         android:layout_marginStart="21dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="21dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="9dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView6">
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="144dp"
+            android:layout_height="63dp"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="30dp"
-            android:onClick="enterCourseList"
-            android:text="@string/course_list" />
+            android:onClick="enterTermReports"
+            android:text="@string/term_reports" />
 
         <Button
             android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="enterAssessmentList"
-            android:text="@string/assessment_list" />
+            android:layout_width="144dp"
+            android:layout_height="63dp"
+            android:onClick="enterDashboard"
+            android:text="@string/dashboard" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton2"

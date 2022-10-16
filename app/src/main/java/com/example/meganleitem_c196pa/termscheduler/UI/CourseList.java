@@ -90,13 +90,13 @@ public class CourseList extends AppCompatActivity {
 
     }
 
-    public void enterTermList(View view){
-        Intent intent = new Intent(CourseList.this, TermList.class);
+    public void enterDashboard(View view){
+        Intent intent = new Intent(CourseList.this, Dashboard.class);
         startActivity(intent);
     }
 
-    public void enterAssessmentList(View view) {
-        Intent intent = new Intent(CourseList.this, AssessmentList.class);
+    public void enterCourseReports(View view) {
+        Intent intent = new Intent(CourseList.this, CourseReports.class);
         startActivity(intent);
     }
 

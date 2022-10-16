@@ -40,29 +40,31 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="84dp"
-        android:onClick="enterCourseList"
-        android:text="@string/course_list"
+        android:onClick="enterAssessmentReports"
+        android:text="@string/assessment_reports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="36dp"
-        android:onClick="enterTermList"
-        android:text="@string/term_list"
+        android:onClick="enterDashboard"
+        android:text="@string/dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton5"
@@ -83,7 +85,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="406dp"
-        android:layout_height="492dp"
+        android:layout_height="475dp"
         android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"

@@ -40,13 +40,13 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/assessment_list"
-        android:onClick="enterAssessmentList"
+        android:onClick="enterDashboard"
+        android:text="@string/dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -94,13 +94,13 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginBottom="84dp"
-        android:onClick="enterTermList"
-        android:text="@string/term_list"
+        android:onClick="enterCourseReports"
+        android:text="@string/course_reports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
